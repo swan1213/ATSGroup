@@ -30,3 +30,6 @@ next-env.d.ts
 # editor
 .vscode/*
 !.vscode/extensions.json
+
+# brand source images (large AI-generated originals; derived WebP lives in public/brand)
+/brand-source/

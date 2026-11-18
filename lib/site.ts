@@ -5,9 +5,9 @@
 export const siteConfig = {
   name: "ATS Group",
   legalName: "ATS Group",
-  tagline: "Software Engineering & AI, Built in Japan",
+  tagline: "Looking for an American Partner",
   description:
-    "ATS Group (Alliance, Technology, Success) is a Tokyo-based software studio. We partner long-term with businesses across Japan and beyond, delivering full-stack engineering and applied AI that drive real revenue growth.",
+    "ATS Group is a Tokyo-based software and AI studio looking for a US-based partner. We bring the engineering work and deliver it; you bring the local connections. Profit is shared on terms agreed in writing before anything starts.",
   // Production domain (must be verified in Resend for email delivery).
   url: "https://atsgroup.world",
   locale: "en_US",
@@ -17,20 +17,22 @@ export const siteConfig = {
     region: "Tokyo",
     country: "JP",
   },
-  cto: {
-    name: "Daniel (Hiro Tanaka)",
-    role: "Chief Technology Officer",
-  },
+  /** Market the partner programme is aimed at. */
+  targetMarket: "United States",
   founders: [
     { name: "Daniel (Hiro Tanaka)", role: "Co-Founder & CTO" },
     { name: "Akira Iwata", role: "Co-Founder & CEO" },
   ],
-  nav: [
-    { href: "#services", label: "Services" },
-    { href: "#approach", label: "Approach" },
-    { href: "#stack", label: "Stack" },
-    { href: "#team", label: "Team" },
-  ],
+  /** Brand artwork derived from the tiger / eagle source images. */
+  images: {
+    hero: "/brand/hero.webp",
+    tiger: "/brand/tiger.webp",
+    eagle: "/brand/eagle.webp",
+    shake: "/brand/shake.webp",
+    duo: "/brand/duo.webp",
+    board: "/brand/board.webp",
+    crowd: "/brand/crowd.webp",
+  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;

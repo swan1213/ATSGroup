@@ -7,6 +7,13 @@ import { useT } from "./LanguageProvider";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+/**
+ * Partner application form plus direct booking.
+ *
+ * Field names are kept stable for the API route (app/api/contact/route.ts):
+ *   name · email · companyName (used here for location) · service (network type)
+ *   message · company_website (honeypot)
+ */
 export function Contact() {
   const t = useT();
   const c = t.contact;
@@ -43,7 +50,7 @@ export function Contact() {
   }
 
   return (
-    <section className="section contact" id="contact">
+    <section className="section contact" id="apply">
       <div className="wrap">
         <header className="section-head section-head--center reveal">
           <p className="section-kicker">{c.kicker}</p>
@@ -52,7 +59,7 @@ export function Contact() {
         </header>
 
         <div className="contact-layout">
-          {/* ---- Left: message form ---- */}
+          {/* ---- Left: application form ---- */}
           <div className="contact-card reveal">
             <h3 className="contact-card-title">{c.formTitle}</h3>
             <p className="contact-card-sub">{c.formSub}</p>
@@ -61,15 +68,18 @@ export function Contact() {
               <div className="form-success" role="status">
                 <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
                   <circle cx="22" cy="22" r="21" fill="none" stroke="#f5b942" strokeWidth="2" />
-                  <path d="M14 22.5l5.5 5.5L31 16" fill="none" stroke="#f5b942" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M14 22.5l5.5 5.5L31 16"
+                    fill="none"
+                    stroke="#f5b942"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 <h4>{c.successTitle}</h4>
                 <p>{c.successBody}</p>
-                <button
-                  type="button"
-                  className="btn btn-ghost"
-                  onClick={() => setStatus("idle")}
-                >
+                <button type="button" className="btn btn-ghost" onClick={() => setStatus("idle")}>
                   {c.sendAnother}
                 </button>
               </div>
@@ -88,15 +98,25 @@ export function Contact() {
 
                 <div className="field-row">
                   <div className="field">
-                    <label htmlFor="companyName">{c.company}</label>
-                    <input id="companyName" name="companyName" type="text" autoComplete="organization" placeholder={c.companyPh} />
+                    <label htmlFor="companyName">{c.loc}</label>
+                    <input
+                      id="companyName"
+                      name="companyName"
+                      type="text"
+                      autoComplete="address-level2"
+                      placeholder={c.locPh}
+                    />
                   </div>
                   <div className="field">
-                    <label htmlFor="service">{c.help}</label>
+                    <label htmlFor="service">{c.network}</label>
                     <select id="service" name="service" defaultValue="">
-                      <option value="" disabled>{c.helpPh}</option>
-                      {c.services.map((s) => (
-                        <option key={s} value={s}>{s}</option>
+                      <option value="" disabled>
+                        {c.networkPh}
+                      </option>
+                      {c.networks.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -118,18 +138,23 @@ export function Contact() {
                 />
 
                 {status === "error" && (
-                  <p className="form-error" role="alert">{error}</p>
+                  <p className="form-error" role="alert">
+                    {error}
+                  </p>
                 )}
 
-                <button
-                  type="submit"
-                  className="btn btn-primary form-submit"
-                  disabled={status === "submitting"}
-                >
+                <button type="submit" className="btn btn-primary form-submit" disabled={status === "submitting"}>
                   {status === "submitting" ? c.submitting : c.submit}
                   {status !== "submitting" && (
                     <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M3 8h9M8 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M3 8h9M8 4l4 4-4 4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   )}
                 </button>

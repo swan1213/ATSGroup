@@ -1,23 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { heroScroll } from "@/lib/heroScroll";
+import { siteConfig } from "@/lib/site";
 import { useT } from "./LanguageProvider";
 import { CountUp } from "./CountUp";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// three.js is client-only and heavy, so load it after hydration.
-const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
-
+/**
+ * Image-led hero: the tiger/eagle handshake carries the message, the copy
+ * explains it. The artwork is a plain <img> (already cropped and converted
+ * to WebP at build time) so there is no layout shift and no next/image config.
+ */
 export function Hero() {
   const t = useT();
   const root = useRef<HTMLElement>(null);
-  const [sceneReady, setSceneReady] = useState(false);
-  const markReady = useCallback(() => setSceneReady(true), []);
 
   useEffect(() => {
     const el = root.current;
@@ -29,11 +28,9 @@ export function Hero() {
     });
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      // ---- Intro timeline ------------------------------------------------
       const q = gsap.utils.selector(el);
-      // Make containers visible *before* building the .from() tweens, which
-      // record the element's current state as their end state.
       gsap.set(q(".hero-anim"), { autoAlpha: 1 });
+
       // .btn has a CSS transform transition that would smear GSAP's frames
       const noCssTransition = {
         onStart() {
@@ -43,44 +40,31 @@ export function Hero() {
           q(".hero-actions .btn").forEach((b) => b.classList.remove("gsap-animating"));
         },
       };
+
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
       tl.from(q(".eyebrow"), { y: 20, autoAlpha: 0, duration: 0.8 })
-        .from(q(".hero-title .line-inner"), { yPercent: 115, rotation: 3, duration: 1.2, stagger: 0.12 }, "-=0.5")
+        .from(q(".hero-title .line-inner"), { yPercent: 115, rotation: 2, duration: 1.2, stagger: 0.12 }, "-=0.5")
         .from(q(".lede"), { y: 24, autoAlpha: 0, duration: 0.9 }, "-=0.8")
         .from(q(".hero-actions .btn"), { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.1, ...noCssTransition }, "-=0.7")
         .from(q(".hero-stats > div"), { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.1 }, "-=0.6")
-        .from(q(".hero-visual"), { scale: 0.86, autoAlpha: 0, duration: 1.6, ease: "expo.out" }, 0.2)
-        .from(q(".hero-chip-wrap"), { scale: 0, autoAlpha: 0, duration: 0.9, ease: "back.out(2.2)", stagger: 0.15 }, 0.9);
+        .from(q(".hero-figure"), { scale: 0.92, autoAlpha: 0, duration: 1.4, ease: "expo.out" }, 0.15);
 
-      // ---- Scroll: copy parallax + drive the 3D scene --------------------
+      // gentle parallax as the hero scrolls away
       gsap.to(q(".hero-copy"), {
-        yPercent: -18,
-        autoAlpha: 0.15,
+        yPercent: -14,
+        autoAlpha: 0.2,
         ease: "none",
         scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
       });
-      // labels drift up and away with the rising globe
-      gsap.to(q(".hero-chips"), {
-        yPercent: -35,
-        autoAlpha: 0,
+      gsap.to(q(".hero-figure img"), {
+        yPercent: 8,
+        scale: 1.06,
         ease: "none",
-        scrollTrigger: { trigger: el, start: "top top", end: "60% top", scrub: true },
-      });
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => {
-          heroScroll.progress = self.progress;
-        },
+        scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
       });
     });
 
-    return () => {
-      mm.revert();
-      heroScroll.progress = 0;
-    };
+    return () => mm.revert();
   }, []);
 
   return (
@@ -91,20 +75,20 @@ export function Hero() {
             <span className="tick" />
             {t.hero.eyebrow}
           </p>
+
           <h1 className="hero-title hero-anim">
-            <span className="line"><span className="line-inner">{t.hero.l1}</span></span>
-            <span className="line"><span className="line-inner">{t.hero.l2}</span></span>
             <span className="line">
-              <span className="line-inner">
-                {t.hero.l3a}
-                <em>{t.hero.em}</em>
-                {t.hero.l3b}
-              </span>
+              <span className="line-inner">{t.hero.l1}</span>
+            </span>
+            <span className="line">
+              <span className="line-inner text-gold">{t.hero.l2}</span>
             </span>
           </h1>
+
           <p className="lede hero-anim">{t.hero.lede}</p>
+
           <div className="hero-actions hero-anim">
-            <a className="btn btn-primary" href="#contact">
+            <a className="btn btn-primary" href="#apply">
               {t.hero.cta}
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
                 <path
@@ -117,39 +101,39 @@ export function Hero() {
                 />
               </svg>
             </a>
-            <a className="btn btn-ghost" href="#skills">
+            <a className="btn btn-ghost" href="#how">
               {t.hero.secondary}
             </a>
           </div>
+
           <dl className="hero-stats hero-anim">
             {t.hero.stats.map((s, i) => (
               <div key={i}>
-                <dt><CountUp value={s.dt} /></dt>
+                <dt>
+                  <CountUp value={s.dt} />
+                </dt>
                 <dd>{s.dd}</dd>
               </div>
             ))}
           </dl>
         </div>
 
-        <a className="scroll-cue hero-anim" href="#skills" aria-label={t.hero.secondary}>
-          <span className="scroll-cue-mouse" aria-hidden="true" />
-        </a>
-
-        <div className="hero-visual hero-anim" aria-hidden="true">
-          {!sceneReady && <div className="hero-fallback" />}
-          <HeroScene onReady={markReady} />
-          <div className="hero-chips">
-            {t.meaning.items.map((it) => (
-              <span className={`hero-chip-wrap hero-chip--${it.num.toLowerCase()}`} key={it.num}>
-                <span className="hero-chip">
-                  <b>{it.num}</b>
-                  {it.word}
-                </span>
-              </span>
-            ))}
-          </div>
-        </div>
+        <figure className="hero-figure hero-anim">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={siteConfig.images.hero}
+            alt={t.hero.imgAlt}
+            width={1048}
+            height={485}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </figure>
       </div>
+
+      <a className="scroll-cue hero-anim" href="#offer" aria-label={t.hero.secondary}>
+        <span className="scroll-cue-mouse" aria-hidden="true" />
+      </a>
     </section>
   );
 }

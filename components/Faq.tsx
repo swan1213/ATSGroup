@@ -17,8 +17,8 @@ export function Faq() {
           <p className="section-kicker">{t.faqHead.kicker}</p>
           <h2>{t.faqHead.title}</h2>
           <p className="section-sub">{t.faqHead.sub}</p>
-          <a className="btn btn-ghost" href="#contact">
-            {t.nav.contact}
+          <a className="btn btn-ghost" href="#apply">
+            {t.nav.apply}
           </a>
         </header>
 

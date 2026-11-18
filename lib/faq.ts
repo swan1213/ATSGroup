@@ -3,74 +3,185 @@ import type { Locale } from "./i18n";
 export type FaqItem = { q: string; a: string };
 
 /**
- * Trust-building FAQ. Professional, outcome-focused, no sales fluff.
+ * Partner-programme FAQ. Deliberately includes the sceptical questions —
+ * an offer like this is only credible if it answers them first.
  * Kept separate from i18n.ts to keep both files readable.
  */
 export const faqItems: Record<Locale, FaqItem[]> = {
   en: [
-    { q: "What industries do you work with?", a: "We work across fintech, SaaS, e-commerce, healthcare, manufacturing, and education, among others. The domain matters less than the problem; if it can be solved with software or AI, we can help." },
-    { q: "How does your development process work?", a: "We begin by understanding your goals, agree on scope and success criteria, then build in short, visible cycles. You see working software early and stay involved at every step." },
-    { q: "Do you provide ongoing support after launch?", a: "Yes. Launch is the start, not the finish. We offer maintenance, monitoring, and continuous improvement so your system stays reliable as your business grows." },
-    { q: "Can you work with existing systems and software?", a: "Absolutely. We regularly extend, integrate with, and improve existing codebases and third-party tools. We meet your stack where it is rather than forcing a rebuild." },
-    { q: "How do you ensure project security?", a: "Security is built in from the start: least-privilege access, encrypted data, dependency and code review, and secure deployment practices. We treat your data as carefully as our own." },
-    { q: "What technologies do you specialize in?", a: "React, Next.js, TypeScript, Node.js, Go, and Python on the engineering side, plus modern AI tooling like Claude, OpenAI, RAG, and automation platforms. We choose per project, never by fashion." },
-    { q: "How do AI and automation solutions benefit businesses?", a: "They remove repetitive work, reduce errors, and free your team for higher-value tasks. Done well, automation pays for itself by saving hours every week and improving consistency." },
-    { q: "How do you handle project communication?", a: "Regular, predictable updates through whatever channel suits you, with clear ownership and no surprises. You always know what is happening and why." },
-    { q: "Do you offer custom software development?", a: "Yes. Most of what we build is custom, shaped to your exact workflow and goals rather than bent to fit off-the-shelf software." },
-    { q: "Can you modernize existing applications?", a: "Yes. We migrate legacy systems, refactor fragile code, and bring older applications up to modern standards of speed, security, and maintainability, usually in safe, incremental steps." },
-    { q: "How do you manage project timelines?", a: "We plan realistically, break work into milestones, and track progress openly. If something shifts, you hear about it early, with options, not at the deadline." },
-    { q: "What makes a successful collaboration?", a: "Shared goals, honest communication, and trust on both sides. The strongest projects happen when client and team operate as one group working toward the same outcome." },
-    { q: "Why do long-term partnerships create better results?", a: "Context compounds. The longer we work together, the better we understand your business, which means faster decisions, fewer mistakes, and work that keeps getting better." },
-    { q: "How do you ensure transparency throughout a project?", a: "Visible progress, plain-language updates, and access to the work as it happens. There is no black box; you can always see where things stand." },
-    { q: "Can you work with startups as well as enterprise companies?", a: "Yes. We move fast and pragmatically for startups, and bring the rigor, documentation, and process that enterprises need. We scale our approach to the stage you are at." },
-    { q: "What is your approach to innovation?", a: "We innovate where it creates value, not for novelty. New technology earns its place by solving a real problem better than the proven alternative." },
-    { q: "How do you help businesses scale?", a: "We build systems that handle growth: solid architecture, automation that removes bottlenecks, and infrastructure that expands with demand instead of breaking under it." },
-    { q: "What happens if project requirements evolve?", a: "We expect them to. Our process is built for change, so evolving requirements are handled calmly through re-prioritisation rather than treated as a crisis." },
-    { q: "How do you measure project success?", a: "By outcomes that matter to you: time saved, revenue enabled, users served, or risk reduced. We agree on what success looks like up front and measure against it." },
-    { q: "Why should a company choose ATS Group instead of a traditional agency?", a: "Because we act as a long-term partner, not a billable vendor. You get senior people, business-first thinking, real AI expertise, and a team genuinely invested in your result." },
+    {
+      q: "Is this a job?",
+      a: "No. It is a partnership, and you are paid from the profit on work that closes. There is no salary, no fixed hours and no manager. If what you want is a salaried sales position, this is honestly not the right offer.",
+    },
+    {
+      q: "Do I have to pay anything to join?",
+      a: "No — not now, not later. There is no joining fee, no starter kit, no training package and no software to buy. Money only ever moves from us to you. If any opportunity like this asks you to pay first, that is the moment to walk away.",
+    },
+    {
+      q: "What is the actual profit split?",
+      a: "It depends on the size of the deal and how much of the relationship you carry — someone who makes an introduction and steps back is in a different position from someone who stays involved through delivery. We agree the number before anything starts and put it in writing. We would rather discuss it honestly on a call than print a figure here that we would have to renegotiate the moment we spoke.",
+    },
+    {
+      q: "Do I need a technical background?",
+      a: "No. You need to be able to explain, in plain language, that you know a team in Tokyo that builds software and AI systems, and to get us into the conversation. We handle every technical question from that point on, and we are happy to join the first call with you.",
+    },
+    {
+      q: "What exactly would I be introducing?",
+      a: "Full-stack web platforms, AI automation and LLM systems, CMS builds, CRM and internal tooling, and the cloud infrastructure underneath them. In practice most leads start as a business problem — a slow manual process, an ageing system, a product that needs building — rather than as a technology request.",
+    },
+    {
+      q: "How do I know you can actually deliver?",
+      a: "Before you introduce anyone, we will walk you through what we have built, how we work, and who does what. You are putting your own reputation on the line with your contacts, so it is reasonable to check us out properly first — and we would think less of a partner who did not.",
+    },
+    {
+      q: "How do I know the profit numbers you show me are real?",
+      a: "You see the client invoice and the costs the profit was calculated from, not just a final figure. If you ever want more detail on a deal you introduced, you can ask for it and you will get it. A partnership where one side cannot verify the arithmetic is not a partnership.",
+    },
+    {
+      q: "What happens if the client does not pay?",
+      a: "Then there is no profit on that deal, and nothing to share. We carry the delivery cost, you carry the time you spent. We are not going to pretend that risk does not exist — it is exactly why the terms are written down in advance.",
+    },
+    {
+      q: "How much time does this take?",
+      a: "That is up to you. Some partners make a handful of well-chosen introductions a year; others treat it as a serious part of their week. There is no quota and no activity reporting. What there also is not, is income without effort.",
+    },
+    {
+      q: "Why not just hire a salesperson in the US?",
+      a: "Because a salaried hire has to be paid before any revenue exists, and because what actually opens doors in the US is an existing relationship, not a job title. A partner who already has the network is worth considerably more to us than an employee who has to build one from scratch.",
+    },
+    {
+      q: "Can I work with you while keeping my current job or business?",
+      a: "Yes, and most partners will. This works well alongside consulting, an agency, or another role, as long as there is no conflict of interest with your employer. That is your call to make, and worth checking before we start.",
+    },
+    {
+      q: "What happens to my contacts if we stop working together?",
+      a: "Anything already closed still pays out on the agreed terms. Your contacts remain your contacts — we are not going to go around you to keep working with someone you introduced, and that commitment goes into the written agreement rather than staying a promise.",
+    },
+    {
+      q: "Who would I actually be dealing with?",
+      a: "One of the two founders, directly. There is no account manager layer and no sales team between you and the people doing the work. The same person who answers your first email is the one who signs the agreement.",
+    },
+    {
+      q: "What is the first step?",
+      a: "Send a short message through the form on this page, or book a 30-minute call. Tell us where you are, roughly who you know, and what you have done before. You will get a real answer either way, usually within one business day.",
+    },
   ],
+
   ja: [
-    { q: "どんな業界に対応していますか？", a: "フィンテック、SaaS、EC、ヘルスケア、製造、教育など幅広く対応します。業界よりも課題が重要で、ソフトウェアやAIで解決できることなら力になれます。" },
-    { q: "開発プロセスはどのように進みますか？", a: "まず目標を理解し、範囲と成功基準を合意した上で、短く見える形のサイクルで開発します。早い段階で動くソフトウェアをご覧いただき、各工程に関わっていただけます。" },
-    { q: "ローンチ後の継続サポートはありますか？", a: "はい。ローンチは終わりではなく始まりです。保守・監視・継続的な改善を通じて、事業の成長に合わせてシステムを安定して保ちます。" },
-    { q: "既存のシステムやソフトと連携できますか？", a: "もちろんです。既存のコードや外部ツールの拡張・連携・改善を日常的に行っています。作り直しを強いるのではなく、今ある構成に合わせます。" },
-    { q: "セキュリティはどう担保しますか？", a: "最小権限、データの暗号化、依存関係とコードのレビュー、安全なデプロイなど、最初からセキュリティを組み込みます。お客様のデータを自分たちのものと同じ慎重さで扱います。" },
-    { q: "得意な技術は何ですか？", a: "React・Next.js・TypeScript・Node.js・Go・Python に加え、Claude や OpenAI、RAG、自動化基盤などの最新AIツールです。流行ではなくプロジェクトごとに選定します。" },
-    { q: "AI・自動化は事業にどう役立ちますか？", a: "繰り返し作業をなくし、ミスを減らし、チームをより価値の高い仕事に解放します。適切に行えば、毎週の時間削減と一貫性の向上で十分に元が取れます。" },
-    { q: "プロジェクトの連絡はどう行いますか？", a: "ご都合の良い手段で、定期的かつ予測可能に更新を共有し、担当を明確にして不意打ちをなくします。何がなぜ起きているか、常に把握いただけます。" },
-    { q: "カスタム開発は可能ですか？", a: "はい。私たちが作るものの多くはカスタムで、既製品に合わせて曲げるのではなく、お客様の業務と目標にぴったり合わせて形にします。" },
-    { q: "既存アプリのモダナイズはできますか？", a: "はい。レガシーの移行、脆いコードのリファクタリング、古いアプリを速度・安全性・保守性の面で現代水準へ。多くの場合、安全に少しずつ進めます。" },
-    { q: "スケジュール管理はどうしていますか？", a: "現実的に計画し、マイルストーンに分割し、進捗をオープンに追跡します。変化が生じても、締切ではなく早い段階で選択肢とともにお伝えします。" },
-    { q: "成功する協働の条件は？", a: "共有された目標、率直な対話、双方の信頼です。お客様とチームがひとつのグループとして同じ成果に向かうとき、最も強いプロジェクトになります。" },
-    { q: "なぜ長期のパートナーシップが良い結果を生むのですか？", a: "文脈が積み重なるからです。長く組むほど事業への理解が深まり、判断が速く、ミスが減り、仕事は良くなり続けます。" },
-    { q: "プロジェクト全体の透明性はどう保ちますか？", a: "見える進捗、平易な言葉での更新、進行中の成果物へのアクセス。ブラックボックスはなく、現状を常に確認できます。" },
-    { q: "スタートアップにも大企業にも対応できますか？", a: "はい。スタートアップには素早く現実的に、大企業には必要な厳密さ・文書化・プロセスを。フェーズに合わせて進め方を調整します。" },
-    { q: "革新への姿勢は？", a: "目新しさのためではなく、価値を生むところで革新します。新技術は、実績ある選択肢より良く課題を解決して初めて採用に値します。" },
-    { q: "事業のスケールをどう支援しますか？", a: "成長に耐えるシステムを築きます。堅実なアーキテクチャ、ボトルネックを取り除く自動化、需要に合わせて拡張するインフラです。" },
-    { q: "要件が途中で変わったら？", a: "変わる前提で進めます。私たちのプロセスは変化に対応できるよう設計されており、要件の変化は危機ではなく、優先順位の見直しで落ち着いて扱います。" },
-    { q: "成功はどう測りますか？", a: "お客様にとって重要な成果で測ります。削減できた時間、生み出せた収益、対応できたユーザー、減らせたリスクなど。成功の定義を最初に合意し、それに照らして測定します。" },
-    { q: "従来の制作会社ではなく ATS を選ぶ理由は？", a: "私たちは請求書を出すベンダーではなく、長期のパートナーとして動くからです。シニア人材、ビジネス起点の思考、本物のAIの知見、そして成果に本気で投資するチームが手に入ります。" },
+    {
+      q: "これは雇用ですか？",
+      a: "いいえ。パートナーシップであり、成約した案件の利益からお支払いします。固定給も、定時も、上司もありません。固定給の営業職をお探しであれば、正直なところこの募集は合いません。",
+    },
+    {
+      q: "参加に費用はかかりますか？",
+      a: "かかりません。今も、今後も。参加費、スターターキット、研修パッケージ、購入が必要なソフトウェア、いずれも存在しません。お金が動くのは常に私たちからあなたへの一方向だけです。この種の話で先に支払いを求められたら、そこで離れるべきです。",
+    },
+    {
+      q: "利益の配分は実際どのくらいですか？",
+      a: "案件の規模と、関係をどこまで担っていただくかによります。紹介だけして退かれる方と、納品まで関与される方とでは立場が異なります。着手前に数字を合意し、書面にします。ここに数字を載せて初回の通話で結局やり直すより、率直にお話ししたいと考えています。",
+    },
+    {
+      q: "技術的な知識は必要ですか？",
+      a: "不要です。東京にソフトウェアと AI を開発するチームを知っている、と平易な言葉で説明し、私たちを会話に引き合わせていただければ十分です。以降の技術的な質問はすべて私たちが対応します。最初の面談に同席することも可能です。",
+    },
+    {
+      q: "具体的に何を紹介することになりますか？",
+      a: "フルスタックの Web プラットフォーム、AI 自動化と LLM システム、CMS 構築、CRM と社内ツール、そしてそれらを支えるクラウド基盤です。実際には、技術の依頼というより「手作業が遅い」「システムが古い」「プロダクトを作りたい」といった事業上の課題から始まることがほとんどです。",
+    },
+    {
+      q: "本当に納品できる会社だと、どう確認すればよいですか？",
+      a: "どなたかをご紹介いただく前に、これまでの実績、進め方、担当分担をひととおりご説明します。あなたはご自身の信用を賭けて紹介されるわけですから、事前にしっかり確認されるのは当然です。確認しないパートナーのほうが、むしろ心配です。",
+    },
+    {
+      q: "提示される利益の数字が本物だと、どう確認できますか？",
+      a: "最終的な金額だけでなく、クライアントへの請求書と、利益算出の根拠となった費用をご覧いただけます。ご紹介いただいた案件について詳細を求められれば、いつでもお出しします。片方が計算を検証できない関係は、パートナーシップとは呼べません。",
+    },
+    {
+      q: "クライアントが支払わなかった場合はどうなりますか？",
+      a: "その案件に利益は出ず、分けるものもありません。私たちは開発費用を、あなたは費やした時間を負担することになります。このリスクが存在しないふりはしません。だからこそ、条件を事前に書面化しています。",
+    },
+    {
+      q: "どのくらいの時間が必要ですか？",
+      a: "あなた次第です。年に数件、厳選した紹介だけをされる方もいれば、週の活動として本格的に取り組む方もいます。ノルマも活動報告もありません。同時に、労力なしの収入もありません。",
+    },
+    {
+      q: "なぜ米国で営業担当を雇わないのですか？",
+      a: "給与は売上が立つ前から発生しますし、米国で実際に扉を開くのは肩書きではなく既存の人間関係だからです。すでに人脈をお持ちのパートナーは、ゼロから築く従業員よりはるかに価値があります。",
+    },
+    {
+      q: "現在の仕事や事業を続けながら組めますか？",
+      a: "はい、多くの方がそうされます。コンサルティング、代理店業、他の職務と並行して問題なく機能します。ただし現在の雇用主との利益相反がないことが前提です。そこはご自身で確認いただくべき点で、開始前に一度ご検討ください。",
+    },
+    {
+      q: "提携を終了した場合、私の紹介先はどうなりますか？",
+      a: "すでに成約した分は合意した条件どおりお支払いします。あなたの人脈はあなたのものです。ご紹介いただいた相手と、あなたを飛び越えて取引を続けることはありません。これは口約束ではなく、書面に明記します。",
+    },
+    {
+      q: "実際の窓口は誰になりますか？",
+      a: "創業者 2 名のいずれかが直接対応します。間にアカウントマネージャーや営業チームは入りません。最初のメールに返信する人間が、そのまま契約に署名します。",
+    },
+    {
+      q: "まず何をすればよいですか？",
+      a: "このページのフォームから短いメッセージをお送りいただくか、30 分の面談をご予約ください。拠点、おおよその人脈、これまでのご経験をお書きください。可否にかかわらず、通常 1 営業日以内にきちんとお返事します。",
+    },
   ],
+
   zh: [
-    { q: "你们服务哪些行业？", a: "我们服务金融科技、SaaS、电商、医疗、制造与教育等众多行业。比起行业，问题本身更重要；只要能用软件或 AI 解决，我们就能帮上忙。" },
-    { q: "你们的开发流程是怎样的？", a: "我们先理解你的目标，就范围与成功标准达成一致，再以短而可见的周期推进。你会很早看到可用的软件，并全程参与每一步。" },
-    { q: "上线后是否提供持续支持？", a: "提供。上线是开始而非结束。我们提供维护、监控与持续改进，让系统在你成长的同时保持可靠。" },
-    { q: "能否与现有系统和软件协作？", a: "当然。我们经常扩展、集成并改进既有代码与第三方工具。我们顺应你现有的技术栈，而非强迫重建。" },
-    { q: "如何保障项目安全？", a: "安全从一开始就内建：最小权限、数据加密、依赖与代码审查，以及安全的部署实践。我们像对待自己的数据一样谨慎对待你的数据。" },
-    { q: "你们擅长哪些技术？", a: "工程方面有 React、Next.js、TypeScript、Node.js、Go 与 Python，加上 Claude、OpenAI、RAG 与自动化平台等现代 AI 工具。按项目选型，绝不盲从潮流。" },
-    { q: "AI 与自动化对企业有何益处？", a: "它们消除重复劳动、减少错误，并把团队解放去做更有价值的事。做得好时，自动化每周节省的时间与带来的一致性，足以收回成本。" },
-    { q: "你们如何进行项目沟通？", a: "通过你方便的渠道，定期、可预期地更新，职责清晰、没有意外。你随时清楚正在发生什么、为什么。" },
-    { q: "是否提供定制软件开发？", a: "是。我们构建的大多是定制方案，按你的实际工作流与目标量身打造，而非削足适履去迁就现成软件。" },
-    { q: "能否对现有应用进行现代化改造？", a: "可以。我们迁移遗留系统、重构脆弱代码，把旧应用提升到现代的速度、安全与可维护标准，通常以安全、渐进的方式进行。" },
-    { q: "你们如何管理项目时间表？", a: "我们做现实的规划，把工作拆成里程碑，并公开跟踪进度。一旦有变动，你会在早期就听到，并带着选项，而非到截止日才知道。" },
-    { q: "什么造就成功的合作？", a: "共同的目标、坦诚的沟通，以及双方的信任。当客户与团队像一个整体朝同一结果努力时，项目最为强大。" },
-    { q: "为什么长期合作能带来更好的结果？", a: "因为积累会复利。合作越久，我们越懂你的业务，于是决策更快、失误更少、成果不断变好。" },
-    { q: "如何在整个项目中保持透明？", a: "可见的进展、通俗的更新，以及对进行中成果的访问。没有黑箱，你随时能看到进展到哪一步。" },
-    { q: "既能服务初创公司也能服务大型企业吗？", a: "可以。对初创我们快速而务实，对企业我们带来所需的严谨、文档与流程。我们会根据你所处的阶段调整方式。" },
-    { q: "你们如何看待创新？", a: "我们在能创造价值的地方创新，而非为新奇而新奇。新技术只有在比成熟方案更好地解决真实问题时，才值得采用。" },
-    { q: "你们如何帮助企业扩展？", a: "我们构建能承载增长的系统：稳健的架构、消除瓶颈的自动化，以及随需求扩展而非崩溃的基础设施。" },
-    { q: "如果项目需求发生变化怎么办？", a: "我们本就预期它会变化。我们的流程为变化而设计，需求演进通过重新排序从容处理，而不会被当作危机。" },
-    { q: "你们如何衡量项目的成功？", a: "用对你重要的结果衡量：节省的时间、带来的收入、服务的用户或降低的风险。我们在一开始就约定「成功的样子」，并据此衡量。" },
-    { q: "相比传统代理商，为何选择 ATS Group？", a: "因为我们以长期伙伴的身份行动，而非按工时计费的供应商。你得到的是资深团队、业务优先的思考、真实的 AI 专长，以及真正在乎你结果的伙伴。" },
+    {
+      q: "这是一份工作吗？",
+      a: "不是。这是合作关系，报酬来自成交项目的利润。没有固定工资、没有固定工时、也没有上级。如果您想要的是一份有底薪的销售职位，坦白说这个邀约并不合适。",
+    },
+    {
+      q: "加入需要支付费用吗？",
+      a: "不需要，现在不需要，以后也不需要。没有加盟费、没有启动礼包、没有培训套餐、没有必须购买的软件。资金永远只从我们流向您。如果任何类似的机会要求您先付钱，那就是该离开的时刻。",
+    },
+    {
+      q: "利润具体怎么分？",
+      a: "取决于项目规模，以及您在这段客户关系中承担多少——只做引荐随后退出，与全程参与到交付，是不同的位置。我们会在开始之前谈定这个数字并写进协议。与其在网页上印一个一通话就要重新谈的比例，我们更愿意在电话里坦诚地谈。",
+    },
+    {
+      q: "我需要技术背景吗？",
+      a: "不需要。您只要能用平实的语言说明：您认识一个在东京做软件和 AI 系统的团队，并把我们引入对话即可。从那之后的所有技术问题都由我们处理，我们也很乐意陪您一起参加第一次通话。",
+    },
+    {
+      q: "我具体要引荐什么？",
+      a: "全栈 Web 平台、AI 自动化与 LLM 系统、CMS 建设、CRM 与内部工具，以及支撑它们的云基础设施。实际上大多数线索最初都是一个业务难题——流程太慢、系统老旧、想做一个产品——而不是一个技术需求。",
+    },
+    {
+      q: "我怎么确认你们真的交付得了？",
+      a: "在您引荐任何人之前，我们会完整地向您介绍做过什么、如何工作、各自负责什么。您是拿自己的信誉去向熟人做担保，事先认真核实完全合理——不核实的合作伙伴反而更让我们担心。",
+    },
+    {
+      q: "我怎么知道你们给我看的利润数字是真的？",
+      a: "您看到的是客户发票和利润计算所依据的成本，而不只是一个最终数额。对于您引荐的项目，若需要更详细的说明，随时可以索取并会得到。一方无法核对账目的关系，称不上合作。",
+    },
+    {
+      q: "如果客户不付款怎么办？",
+      a: "那么这个项目就没有利润，也就没有可分的部分。我们承担开发成本，您承担投入的时间。我们不会假装这个风险不存在——这正是条款需要事先写清楚的原因。",
+    },
+    {
+      q: "这需要花多少时间？",
+      a: "由您决定。有些伙伴一年只做少数几次精心挑选的引荐，也有人把它当作每周工作的重要部分。没有业绩指标，也没有活动汇报。同样，也没有不费力气的收入。",
+    },
+    {
+      q: "为什么不直接在美国雇一名销售？",
+      a: "因为雇员在产生任何营收之前就需要发薪，而在美国真正能打开大门的是既有的人际关系，不是职位头衔。一位本就拥有人脉的伙伴，对我们的价值远高于一名需要从零建立人脉的员工。",
+    },
+    {
+      q: "我能在保留现有工作或事业的同时合作吗？",
+      a: "可以，大多数伙伴都是如此。这与咨询、代理公司或其他职务并行得很好，前提是与您现在的雇主不存在利益冲突。这需要您自己判断，建议在开始前先确认清楚。",
+    },
+    {
+      q: "如果合作结束，我的人脉会怎样？",
+      a: "已经成交的部分仍按约定条款支付。您的人脉仍然属于您——我们不会绕过您去继续和您引荐的客户做生意，而且这一点会写进协议，而不只是停留在口头承诺。",
+    },
+    {
+      q: "我实际对接的是谁？",
+      a: "两位创始人之一，直接对接。中间没有客户经理，也没有销售团队。回复您第一封邮件的人，就是最终签署协议的人。",
+    },
+    {
+      q: "第一步该做什么？",
+      a: "通过本页的表单发一条简短消息，或直接预约 30 分钟通话。告诉我们您在哪里、大致认识哪些人、以及过往做过什么。无论结果如何，通常会在一个工作日内得到真实的答复。",
+    },
   ],
 };

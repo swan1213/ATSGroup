@@ -1,10 +1,20 @@
 import { siteConfig } from "@/lib/site";
 
 /**
- * Structured data for rich search results (Organization + ProfessionalService).
- * Injected as a JSON-LD script in the document head.
+ * Structured data for rich search results.
+ *
+ * Organization + ProfessionalService describe ATS Group itself; JobPosting is
+ * deliberately NOT used, because this is a profit-share partnership and not
+ * employment — marking it up as a job would misrepresent the offer.
  */
 export function JsonLd() {
+  const address = {
+    "@type": "PostalAddress",
+    addressLocality: siteConfig.location.city,
+    addressRegion: siteConfig.location.region,
+    addressCountry: siteConfig.location.country,
+  };
+
   const data = {
     "@context": "https://schema.org",
     "@graph": [
@@ -16,21 +26,8 @@ export function JsonLd() {
         url: siteConfig.url,
         description: siteConfig.description,
         slogan: siteConfig.tagline,
-        foundingLocation: {
-          "@type": "Place",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: siteConfig.location.city,
-            addressRegion: siteConfig.location.region,
-            addressCountry: siteConfig.location.country,
-          },
-        },
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: siteConfig.location.city,
-          addressRegion: siteConfig.location.region,
-          addressCountry: siteConfig.location.country,
-        },
+        foundingLocation: { "@type": "Place", address },
+        address,
         founder: siteConfig.founders.map((p) => ({
           "@type": "Person",
           name: p.name,
@@ -41,6 +38,14 @@ export function JsonLd() {
           name: p.name,
           jobTitle: p.role,
         })),
+        seeks: {
+          "@type": "Demand",
+          name: "US-based business development partner",
+          description:
+            "A partner based in the United States who introduces client opportunities to ATS Group and receives an agreed share of the profit on work that closes. No fee is payable by the partner at any stage.",
+          areaServed: { "@type": "Country", name: siteConfig.targetMarket },
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+        },
       },
       {
         "@type": "ProfessionalService",
@@ -49,22 +54,18 @@ export function JsonLd() {
         image: `${siteConfig.url}/opengraph-image`,
         url: siteConfig.url,
         description: siteConfig.description,
-        areaServed: ["Japan", "Worldwide"],
+        areaServed: ["Japan", "United States", "Worldwide"],
         priceRange: "$$$",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: siteConfig.location.city,
-          addressRegion: siteConfig.location.region,
-          addressCountry: siteConfig.location.country,
-        },
+        address,
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Services",
           itemListElement: [
             "Full-Stack Development",
-            "Applied AI & LLM Systems",
-            "AI Training for Teams",
-            "Architecture & Consulting",
+            "AI Automation & LLM Systems",
+            "CMS Solutions",
+            "CRM & Internal Tooling",
+            "Cloud Infrastructure & DevOps",
           ].map((name) => ({
             "@type": "Offer",
             itemOffered: { "@type": "Service", name },
@@ -77,7 +78,7 @@ export function JsonLd() {
         url: siteConfig.url,
         name: siteConfig.name,
         publisher: { "@id": `${siteConfig.url}/#organization` },
-        inLanguage: "en",
+        inLanguage: ["en", "ja", "zh"],
       },
     ],
   };

@@ -15,9 +15,10 @@ gsap.registerPlugin(ScrollTrigger);
  *  .reveal                    3D rise-in when scrolled into view
  *  .reveal[data-reveal=flip]  card flips in around the Y axis
  *  .reveal[data-reveal=zoom]  pushes forward out of depth
- *  .partner-line              connector draws with scroll (scrub)
- *  .results-chart             dots pop + area fades in
- *  .btn-primary, .nav-cta     magnetic hover (fine pointers only)
+ *
+ * Buttons have no magnetic hover: in this theme a button's hover IS its
+ * transform (it presses down into its own hard shadow), and a GSAP tween
+ * writing x/y would fight that CSS transition for the same property.
  *
  * Everything is skipped under prefers-reduced-motion (content just shows).
  */
@@ -77,71 +78,8 @@ function setupReveals() {
   });
 }
 
-function setupPartnerLine() {
-  const line = document.querySelector<HTMLElement>(".partner-line");
-  const flow = document.querySelector<HTMLElement>(".partner-flow");
-  if (!line || !flow) return;
-  const vertical = window.matchMedia("(max-width: 920px)").matches;
-  gsap.fromTo(
-    line,
-    vertical ? { scaleY: 0, scaleX: 1 } : { scaleX: 0, scaleY: 1 },
-    {
-      scaleX: 1, scaleY: 1,
-      transformOrigin: vertical ? "50% 0%" : "0% 50%",
-      ease: "none",
-      scrollTrigger: { trigger: flow, start: "top 75%", end: "bottom 60%", scrub: 0.6 },
-    }
-  );
-}
-
-function setupChart() {
-  const chart = document.querySelector(".results-chart");
-  if (!chart) return;
-  const dots = chart.querySelectorAll("circle");
-  const area = chart.querySelector(".chart-area");
-  const tl = gsap.timeline({ scrollTrigger: { trigger: chart, start: "top 78%", once: true } });
-  if (area) tl.from(area, { autoAlpha: 0, duration: 1, ease: "power2.out" });
-  tl.from(dots, { scale: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "back.out(3)", stagger: 0.08 }, 0.2);
-}
-
-function setupMagnetic() {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
-  const cleanups: (() => void)[] = [];
-  document.querySelectorAll<HTMLElement>(".btn-primary, .nav-cta").forEach((el) => {
-    const xTo = gsap.quickTo(el, "x", { duration: 0.5, ease: "power3.out" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.5, ease: "power3.out" });
-    const move = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      xTo((e.clientX - (r.left + r.width / 2)) * 0.3);
-      yTo((e.clientY - (r.top + r.height / 2)) * 0.4);
-    };
-    const leave = () => {
-      xTo(0);
-      yTo(0);
-    };
-    el.addEventListener("pointermove", move);
-    el.addEventListener("pointerleave", leave);
-    cleanups.push(() => {
-      el.removeEventListener("pointermove", move);
-      el.removeEventListener("pointerleave", leave);
-    });
-  });
-  return () => cleanups.forEach((c) => c());
-}
-
 export function GsapEffects() {
   const { locale } = useLang();
-
-  // One-time effects (elements whose identity never changes).
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      setupPartnerLine();
-      setupChart();
-      return setupMagnetic();
-    });
-    return () => mm.revert();
-  }, []);
 
   // Reveals run on mount and again after a language switch, because cards
   // keyed by their (translated) text remount as fresh, still-hidden nodes.

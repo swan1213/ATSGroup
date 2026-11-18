@@ -8,14 +8,13 @@ export function Footer() {
   const t = useT();
   const year = new Date().getFullYear();
   const links = [
-    { href: "#news", label: t.nav.news },
-    { href: "#skills", label: t.nav.skills },
-    { href: "#why", label: t.nav.why },
-    { href: "#collaboration", label: t.nav.collaboration },
-    { href: "#team", label: t.nav.team },
-    { href: "#company", label: t.nav.company },
+    { href: "#offer", label: t.nav.offer },
+    { href: "#who", label: t.who.kicker },
+    { href: "#how", label: t.nav.how },
+    { href: "#terms", label: t.nav.terms },
+    { href: "#about", label: t.nav.about },
     { href: "#faq", label: t.nav.faq },
-    { href: "#contact", label: t.nav.contact },
+    { href: "#apply", label: t.nav.apply },
   ];
 
   return (
@@ -24,14 +23,22 @@ export function Footer() {
         <div className="footer-cta reveal" data-reveal="zoom">
           <p className="section-kicker">{t.contact.kicker}</p>
           <h2 className="footer-cta-title">{t.contact.title}</h2>
-          <a className="btn btn-primary" href="#contact">
-            {t.nav.contact}
+          <a className="btn btn-primary" href="#apply">
+            {t.hero.cta}
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M3 8h9M8 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 8h9M8 4l4 4-4 4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </div>
       </div>
+
       <div className="wrap footer-inner">
         <div className="footer-brand">
           <a className="brand" href="#top">
@@ -52,11 +59,7 @@ export function Footer() {
         <div className="footer-meta">
           <p>{t.footer.location}</p>
           <p>
-            <a
-              href={siteConfig.calendly}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={siteConfig.calendly} target="_blank" rel="noopener noreferrer">
               {t.footer.schedule}
             </a>
           </p>

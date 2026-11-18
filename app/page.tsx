@@ -1,18 +1,10 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { TrustStrip } from "@/components/TrustStrip";
-import { Meaning } from "@/components/Meaning";
-import { PartnerFlow } from "@/components/PartnerFlow";
-import { News } from "@/components/News";
-import { Skills } from "@/components/Skills";
-import { Experience } from "@/components/Experience";
-import { WhyCollaborate } from "@/components/WhyCollaborate";
-import { Approach } from "@/components/Approach";
-import { Stack } from "@/components/Stack";
-import { Collaboration } from "@/components/Collaboration";
-import { Results } from "@/components/Results";
-import { Philosophy } from "@/components/Philosophy";
-import { Founders } from "@/components/Founders";
+import { Deal } from "@/components/Deal";
+import { Who } from "@/components/Who";
+import { How } from "@/components/How";
+import { Terms } from "@/components/Terms";
+import { About } from "@/components/About";
 import { Company } from "@/components/Company";
 import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
@@ -26,19 +18,11 @@ export default function Home() {
       <Header />
       <main id="main">
         <Hero />
-        <TrustStrip />
-        <Meaning />
-        <PartnerFlow />
-        <Skills />
-        <Results />
-        <Approach />
-        <WhyCollaborate />
-        <Collaboration />
-        <Stack />
-        <Experience />
-        <Philosophy />
-        <Founders />
-        <News />
+        <Deal />
+        <Who />
+        <How />
+        <Terms />
+        <About />
         <Company />
         <Faq />
         <Contact />
