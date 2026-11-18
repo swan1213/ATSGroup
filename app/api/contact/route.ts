@@ -26,8 +26,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 type Payload = {
   name?: string;
   email?: string;
-  companyName?: string;
-  service?: string;
+  companyName?: string; // the applicant's location (form label: "Where you are based")
+  service?: string; // the applicant's network type
   message?: string;
   company_website?: string; // honeypot
 };
@@ -75,8 +75,8 @@ export async function POST(request: Request) {
   const name = (data.name || "").trim();
   const email = (data.email || "").trim();
   const message = (data.message || "").trim();
-  const company = (data.companyName || "").trim() || "Not provided";
-  const service = (data.service || "").trim() || "Not specified";
+  const location = (data.companyName || "").trim() || "Not provided";
+  const network = (data.service || "").trim() || "Not specified";
 
   if (!name || !email || !message) {
     return NextResponse.json(
@@ -102,11 +102,11 @@ export async function POST(request: Request) {
 
   // Fallback: no key configured — log so nothing is lost in development.
   if (!apiKey) {
-    console.log("[contact] (no RESEND_API_KEY) submission:", {
+    console.log("[contact] (no RESEND_API_KEY) partner application:", {
       name,
       email,
-      company,
-      service,
+      location,
+      network,
       message,
       receivedAt,
     });
@@ -118,29 +118,34 @@ export async function POST(request: Request) {
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="padding:6px 0;color:#5f6b78;width:120px">Name</td><td style="padding:6px 0;font-weight:bold">${escapeHtml(name)}</td></tr>
       <tr><td style="padding:6px 0;color:#5f6b78">Email</td><td style="padding:6px 0"><a href="mailto:${escapeHtml(email)}" style="color:#1a56db">${escapeHtml(email)}</a></td></tr>
-      <tr><td style="padding:6px 0;color:#5f6b78">Company</td><td style="padding:6px 0">${escapeHtml(company)}</td></tr>
-      <tr><td style="padding:6px 0;color:#5f6b78">Topic</td><td style="padding:6px 0">${escapeHtml(service)}</td></tr>
+      <tr><td style="padding:6px 0;color:#5f6b78">Based in</td><td style="padding:6px 0">${escapeHtml(location)}</td></tr>
+      <tr><td style="padding:6px 0;color:#5f6b78">Network</td><td style="padding:6px 0">${escapeHtml(network)}</td></tr>
     </table>
     <div style="margin-top:16px;padding-top:16px;border-top:1px solid #e3e8ef">
-      <div style="color:#5f6b78;font-size:13px;margin-bottom:8px">Message</div>
+      <div style="color:#5f6b78;font-size:13px;margin-bottom:8px">About their network</div>
       <div style="white-space:pre-wrap;line-height:1.6">${escapeHtml(message)}</div>
     </div>
     <p style="color:#9aa7b4;font-size:12px;margin-top:18px">Received ${receivedAt}</p>`;
 
   const teamText =
-    `New enquiry · ATS Group\n\n` +
-    `Name:    ${name}\nEmail:   ${email}\nCompany: ${company}\nTopic:   ${service}\n\n` +
-    `Message:\n${message}\n\nReceived ${receivedAt}`;
+    `New partner application · ATS Group\n\n` +
+    `Name:     ${name}\nEmail:    ${email}\nBased in: ${location}\nNetwork:  ${network}\n\n` +
+    `About their network:\n${message}\n\nReceived ${receivedAt}`;
 
   // ---- 2) Confirmation to the visitor --------------------------------------
   const userInner = `
     <p style="font-size:15px;line-height:1.7;margin:0 0 14px">Hi ${escapeHtml(name)},</p>
     <p style="font-size:15px;line-height:1.7;margin:0 0 14px">
-      Thank you for reaching out to <strong>ATS Group</strong>. We've received your
-      message and a member of our team will get back to you within one business day.
+      Thank you for your interest in partnering with <strong>ATS Group</strong>. We've
+      received your application and one of the two founders will read it personally and
+      reply within one business day — either way.
+    </p>
+    <p style="font-size:15px;line-height:1.7;margin:0 0 14px">
+      Just so it is on the record: becoming a partner costs you nothing, now or later.
+      We will never ask you to pay a fee, buy a package, or move money on our behalf.
     </p>
     <div style="background:#f3f6fb;border:1px solid #e3e8ef;border-radius:10px;padding:14px 16px;margin:18px 0">
-      <div style="color:#5f6b78;font-size:12px;margin-bottom:6px">Your message</div>
+      <div style="color:#5f6b78;font-size:12px;margin-bottom:6px">What you sent us</div>
       <div style="white-space:pre-wrap;line-height:1.6;font-size:14px">${escapeHtml(message)}</div>
     </div>
     <p style="font-size:15px;line-height:1.7;margin:0 0 6px">
@@ -153,9 +158,11 @@ export async function POST(request: Request) {
 
   const userText =
     `Hi ${name},\n\n` +
-    `Thank you for reaching out to ATS Group. We've received your message and ` +
-    `will get back to you within one business day.\n\n` +
-    `Your message:\n${message}\n\n` +
+    `Thank you for your interest in partnering with ATS Group. We've received your ` +
+    `application and one of the founders will reply within one business day.\n\n` +
+    `Becoming a partner costs you nothing, now or later. We will never ask you to pay ` +
+    `a fee, buy a package, or move money on our behalf.\n\n` +
+    `What you sent us:\n${message}\n\n` +
     `Prefer to talk sooner? Book a call: ${siteConfig.calendly}\n\n` +
     `The ATS Group team\nTokyo, Japan`;
 
@@ -167,8 +174,8 @@ export async function POST(request: Request) {
       from,
       to,
       replyTo: email,
-      subject: `New enquiry from ${name}`,
-      html: shell("New contact-form enquiry", teamInner),
+      subject: `Partner application — ${name} (${location})`,
+      html: shell("New partner application", teamInner),
       text: teamText,
     });
 
@@ -188,7 +195,7 @@ export async function POST(request: Request) {
       from,
       to: email,
       replyTo: to,
-      subject: "We've received your message · ATS Group",
+      subject: "We've received your application · ATS Group",
       html: shell("Thanks for getting in touch", userInner),
       text: userText,
     });

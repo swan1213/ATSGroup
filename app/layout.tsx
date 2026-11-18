@@ -1,25 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Baloo_2, Nunito } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { ScrollTop } from "@/components/ScrollTop";
 import { Tilt3D } from "@/components/Tilt3D";
 import { GsapEffects } from "@/components/GsapEffects";
-import { WaveBackground } from "@/components/WaveBackground";
+import { SkyBackground } from "@/components/SkyBackground";
 import { CustomCursor } from "@/components/CustomCursor";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
-// Inter for Latin; Noto Sans JP (loaded via <link> below) covers JP/CJK glyphs,
-// giving the gothic, modern Japanese corporate look.
-const inter = Inter({
+// Cartoon pairing: Baloo 2 (rounded, heavy) for headings, buttons and badges;
+// Nunito for body copy. Nunito is bound to --font-sans, which the base
+// stylesheet already uses everywhere. Noto Sans JP/SC (<link> below) covers
+// the CJK glyphs neither Latin face has.
+const display = Baloo_2({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const body = Nunito({
+  subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#060a13",
+  themeColor: "#0b1f3d",
   width: "device-width",
   initialScale: 1,
   colorScheme: "dark",
@@ -34,16 +41,16 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   keywords: [
-    "software development Japan",
-    "full-stack development Tokyo",
-    "AI training",
-    "LLM development",
-    "AI consulting Japan",
-    "Next.js development",
-    "machine learning Tokyo",
-    "IT company Japan",
-    "RAG systems",
-    "software studio Tokyo",
+    "business partner wanted USA",
+    "US sales partner software",
+    "referral partner program",
+    "revenue share partnership",
+    "software development partner",
+    "AI automation reseller",
+    "channel partner opportunity",
+    "introduce clients earn commission",
+    "Tokyo software studio",
+    "ATS Group partnership",
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -96,18 +103,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
           rel="stylesheet"
         />
       </head>
       <body>
         <a href="#main" className="skip-link">Skip to content</a>
-        <WaveBackground />
+        <SkyBackground />
         <LanguageProvider>
           {children}
           <GsapEffects />

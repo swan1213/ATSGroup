@@ -3,6 +3,7 @@
    Theme: dark tech + gold, over a live 3D particle-wave background.
      Blue → cyan = Technology (glow, focus, data)
      Gold        = Success   (revenue, CTAs, key numbers)
+   Page: "Looking for an American Partner" — partner recruitment landing.
    ===================================================================== */
 
 :root {
@@ -24,6 +25,7 @@
   --gold-2:     #ffd27a;
   --gold-dk:    #d99a1e;
   --on-gold:    #1a1204;
+  --rose:       #fca5a5;
 
   --grad-tech:  linear-gradient(120deg, var(--blue), var(--cyan));
   --grad-gold:  linear-gradient(120deg, var(--gold-2), var(--gold) 55%, var(--gold-dk));
@@ -191,10 +193,10 @@ em { font-style: normal; color: var(--gold); }
 }
 
 /* =====================================================================
-   Hero — full screen
+   Hero — copy beside the tiger / eagle artwork
    ===================================================================== */
 .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--header-h) + 4.5rem) 0 5rem; overflow: hidden; }
-.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: .6rem; font-size: .78rem; letter-spacing: .16em;
@@ -214,8 +216,7 @@ em { font-style: normal; color: var(--gold); }
 }
 .hero-title .line { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
 .hero-title .line-inner { display: inline-block; will-change: transform; }
-.hero h1 em { background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.lede { font-size: 1.17rem; color: var(--text-soft); max-width: 42ch; margin-bottom: 2.3rem; }
+.lede { font-size: 1.17rem; color: var(--text-soft); max-width: 46ch; margin-bottom: 2.3rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 2.6rem; }
 
 .hero-stats {
@@ -228,40 +229,19 @@ em { font-style: normal; color: var(--gold); }
 .hero-stats dt { font-size: 1.45rem; font-weight: 800; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero-stats dd { font-size: .82rem; color: var(--muted); margin: 0; line-height: 1.45; }
 
-.hero-visual { position: relative; aspect-ratio: 1 / 1; width: 100%; max-width: 600px; justify-self: center; }
-.hero-canvas {
-  position: absolute; inset: 0;
-  mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%);
+/* Framed artwork. The source is pre-cropped WebP, so width/height are fixed
+   and the aspect ratio is reserved before the bytes land (no CLS). */
+.hero-figure {
+  position: relative; margin: 0; border-radius: 26px; overflow: hidden;
+  border: 1px solid rgba(245,185,66,.26); box-shadow: var(--shadow), 0 0 0 1px rgba(245,185,66,.08);
+  background: var(--solid);
 }
-.hero-canvas canvas { width: 100% !important; height: 100% !important; display: block; }
-.hero-fallback {
-  position: absolute; inset: 14%; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(34,211,238,.35), transparent 45%),
-              radial-gradient(circle at 60% 70%, rgba(245,185,66,.25), transparent 50%),
-              radial-gradient(circle, rgba(59,130,246,.35), transparent 70%);
-  animation: orbBreath 6s ease-in-out infinite;
+.hero-figure img { width: 100%; height: auto; display: block; will-change: transform; }
+.hero-figure::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(5,8,15,.55) 100%),
+              radial-gradient(120% 80% at 50% 0%, transparent 60%, rgba(5,8,15,.4));
 }
-@keyframes orbBreath { 50% { transform: scale(1.05); opacity: .8; } }
-
-.hero-chips { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.hero-chip-wrap { position: absolute; }
-.hero-chip {
-  display: inline-flex; align-items: center; gap: .55rem;
-  padding: .55rem 1rem .55rem .6rem; border-radius: 999px;
-  background: rgba(12, 19, 34, .72); border: 1px solid var(--line-2);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 20px 40px -20px rgba(0,0,0,.8); font-weight: 600; font-size: .9rem; color: var(--text);
-  animation: chipFloat 7s ease-in-out infinite;
-}
-.hero-chip b { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: .82rem; color: var(--on-gold); background: var(--grad-gold); }
-.hero-chip--a { top: 12%; left: -2%; }
-.hero-chip--t { top: 46%; right: -4%; }
-.hero-chip--t .hero-chip { animation-delay: -2.3s; }
-.hero-chip--t b { background: var(--grad-tech); color: #04121f; }
-.hero-chip--s { bottom: 10%; left: 10%; }
-.hero-chip--s .hero-chip { animation-delay: -4.6s; }
-@keyframes chipFloat { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -12px, 0); } }
 
 .scroll-cue { position: absolute; left: 50%; bottom: 1.8rem; transform: translateX(-50%); z-index: 3; padding: .5rem; }
 .scroll-cue-mouse { display: block; width: 26px; height: 42px; border-radius: 14px; border: 2px solid var(--line-2); position: relative; }
@@ -270,27 +250,6 @@ em { font-style: normal; color: var(--gold); }
   background: var(--gold); animation: cue 1.8s var(--ease) infinite;
 }
 @keyframes cue { 0% { opacity: 0; transform: translateY(-4px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
-
-/* =====================================================================
-   Marquees (industries, tech stack)
-   ===================================================================== */
-.marquee {
-  display: flex; overflow: hidden; min-width: 0;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.marquee-track {
-  list-style: none; padding: 0 1.2rem 0 0; margin: 0; display: flex; gap: 1.2rem; flex: none;
-  animation: marquee 34s linear infinite;
-}
-.marquee:hover .marquee-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-100%); } }
-
-.strip { position: relative; border-block: 1px solid var(--line); background: rgba(5,8,15,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-.strip-inner { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.4rem); padding-block: 1.15rem; }
-.strip-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); flex: none; }
-.strip .marquee-track li { font-weight: 600; color: var(--text-soft); font-size: 1.02rem; display: inline-flex; align-items: center; gap: 1.2rem; white-space: nowrap; }
-.strip .marquee-track li::after { content: "✦"; color: var(--gold); font-size: .7rem; opacity: .8; }
 
 /* =====================================================================
    Sections
@@ -305,12 +264,12 @@ em { font-style: normal; color: var(--gold); }
   font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 700;
   padding: .38rem .85rem; border-radius: 999px; background: rgba(34,211,238,.07); border: 1px solid rgba(34,211,238,.22);
 }
-.section-head h2, .news-head h2 { margin-bottom: 1.1rem; background: var(--grad-head); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .05em; }
+.section-head h2 { margin-bottom: 1.1rem; background: var(--grad-head); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .05em; }
 .section-sub { color: var(--muted); font-size: 1.12rem; }
 
 /* Shared glass card look */
-.exp-card, .founder-card, .why-card, .faq-item, .contact-card, .results-chart,
-.partner-step, .news-card, .fact, .approach-card, .bento-card {
+.deal-card, .who-list, .how-card, .terms-card, .triad-card,
+.faq-item, .contact-card, .fact, .about-builds {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -343,272 +302,132 @@ em { font-style: normal; color: var(--gold); }
 .reveal, .hero-anim { opacity: 0; }
 .gsap-animating { transition: none !important; }
 
-.card-tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.1rem; }
-.card-tags li { font-size: .76rem; color: var(--text-soft); border: 1px solid var(--line-2); background: rgba(5,8,15,.45); border-radius: 999px; padding: .26rem .72rem; }
-
 /* =====================================================================
-   Services — bento grid
+   The offer — we bring / you bring / we share
    ===================================================================== */
-.bento { display: grid; grid-template-columns: 1.25fr 1fr 1fr; grid-auto-rows: minmax(330px, auto); gap: clamp(1rem, 2vw, 1.4rem); }
-.bento-card { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; min-height: 330px; }
-.bento-card--feature { grid-row: span 2; }
-.bento-card:nth-child(2) { grid-column: span 2; }
-.bento-media { position: absolute; inset: 0; z-index: 0; }
-.bento-media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) brightness(.7); transition: transform 1.2s var(--ease), filter .6s; }
-.bento-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,8,15,.05) 0%, rgba(5,8,15,.6) 45%, rgba(5,8,15,.95) 100%); }
-.bento-card:hover .bento-media img { transform: scale(1.06); filter: saturate(1) brightness(.8); }
-.bento-body { position: relative; z-index: 1; padding: clamp(1.4rem, 2.6vw, 2rem); transform: translateZ(calc(var(--lift) * 30px)); }
-.bento-num { display: inline-block; font-size: .78rem; font-weight: 800; letter-spacing: .1em; color: var(--on-gold); background: var(--grad-gold); padding: .25rem .6rem; border-radius: 8px; margin-bottom: .9rem; }
-.bento-card h3 { font-size: clamp(1.3rem, 2.2vw, 1.7rem); margin-bottom: .6rem; }
-.bento-card--feature h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-.bento-card p { color: var(--text-soft); font-size: .98rem; }
-
-/* =====================================================================
-   Approach — pinned horizontal 3D track
-   ===================================================================== */
-.approach { overflow: hidden; }
-.approach-inner { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-block: 5rem; }
-.approach .section-head { margin-bottom: clamp(2rem, 4vw, 3rem); }
-.approach-track { list-style: none; padding: 0; display: flex; gap: clamp(1.2rem, 2.5vw, 2rem); perspective: 1400px; will-change: transform; }
-.approach-card {
-  position: relative; flex: none; width: min(540px, 72vw); min-height: 330px;
-  padding: clamp(1.8rem, 3vw, 2.6rem); display: flex; flex-direction: column; overflow: hidden;
-  transform-style: preserve-3d;
+.deal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.5rem); }
+.deal-card { position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.deal-art { position: relative; aspect-ratio: 5 / 4; overflow: hidden; background: var(--solid); }
+.deal-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; transition: transform 1.1s var(--ease), filter .6s; filter: saturate(.95); }
+.deal-card:hover .deal-art img { transform: scale(1.06); filter: saturate(1.05); }
+.deal-art::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(5,8,15,.1) 40%, rgba(5,8,15,.85) 100%);
 }
-.approach-card::before {
+.deal-step {
+  position: absolute; left: 1.2rem; top: 1.2rem; z-index: 1;
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+  font-size: .82rem; font-weight: 800; color: var(--on-gold); background: var(--grad-gold);
+  box-shadow: var(--glow-gold);
+}
+.deal-body { position: relative; z-index: 1; padding: clamp(1.4rem, 2.4vw, 1.9rem); transform: translateZ(calc(var(--lift) * 26px)); }
+.deal-role { font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 700; margin-bottom: .5rem; }
+.deal-body h3 { font-size: 1.5rem; margin-bottom: .8rem; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.deal-body p { color: var(--text-soft); font-size: .98rem; }
+
+/* =====================================================================
+   Who this is for — fit / not a fit
+   ===================================================================== */
+.who-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(1.5rem, 3.5vw, 3rem); align-items: start; }
+.who-figure {
+  margin: 0; border-radius: var(--radius); overflow: hidden; position: relative;
+  border: 1px solid var(--line-2); box-shadow: var(--shadow); position: sticky; top: 120px;
+}
+.who-figure img { width: 100%; height: auto; }
+.who-figure::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(500px circle at 100% 0%, rgba(34,211,238,.12), transparent 50%);
+  background: linear-gradient(180deg, transparent 50%, rgba(5,8,15,.5));
 }
-.approach-no {
-  font-size: clamp(3.2rem, 6vw, 4.6rem); font-weight: 900; line-height: 1; margin-bottom: 1.4rem;
-  background: var(--grad-tech); -webkit-background-clip: text; background-clip: text; color: transparent;
+.who-lists { display: grid; gap: 1.2rem; }
+.who-list { padding: clamp(1.4rem, 2.6vw, 2rem); }
+.who-list h3 { display: flex; align-items: center; gap: .7rem; font-size: 1.18rem; margin-bottom: 1.1rem; }
+.who-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; flex: none; }
+.who-mark--yes { color: var(--on-gold); background: var(--grad-gold); }
+.who-mark--no { color: var(--rose); background: rgba(248,113,113,.12); border: 1px solid rgba(248,113,113,.35); }
+.who-list ul { list-style: none; padding: 0; display: grid; gap: .75rem; }
+.who-list li { position: relative; padding-left: 1.5rem; color: var(--text-soft); font-size: .99rem; }
+.who-list li::before {
+  content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%;
 }
-.approach-card h3 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom: .7rem; }
-.approach-card p { color: var(--text-soft); font-size: 1.02rem; max-width: 40ch; }
-.approach-index { margin-top: auto; padding-top: 1.6rem; font-family: var(--mono); font-size: .8rem; color: var(--muted); letter-spacing: .1em; }
+.who-list--yes li::before { background: var(--gold); box-shadow: 0 0 0 3px rgba(245,185,66,.14); }
+.who-list--no li::before { background: rgba(248,113,113,.7); box-shadow: 0 0 0 3px rgba(248,113,113,.1); }
+.who-list--no { background: linear-gradient(160deg, rgba(248,113,113,.05), rgba(14,21,37,.7)); }
 
 /* =====================================================================
-   Tech stack — marquee rows
+   How it works — vertical timeline
    ===================================================================== */
-.stack-rows { display: grid; gap: .9rem; }
-.stack-row { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 1.2rem; padding-inline: var(--gutter); max-width: 1500px; margin-inline: auto; width: 100%; }
-.stack-row-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); font-weight: 700; text-align: right; }
-.stack-row .marquee-track { animation-duration: 40s; }
-.stack-row--rev .marquee-track { animation-direction: reverse; animation-duration: 46s; }
-.tech-pill {
-  white-space: nowrap; font-weight: 600; font-size: 1rem; color: var(--text);
-  padding: .8rem 1.4rem; border-radius: 16px; border: 1px solid var(--line-2);
-  background: var(--surface); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+.how-steps { list-style: none; padding: 0; margin: 0; position: relative; display: grid; gap: clamp(1rem, 2vw, 1.6rem); max-width: 880px; margin-inline: auto; }
+.how-rail {
+  position: absolute; left: 27px; top: 10px; bottom: 10px; width: 2px; transform-origin: 50% 0;
+  background: linear-gradient(180deg, var(--cyan), var(--blue) 45%, var(--gold));
+  border-radius: 2px;
 }
-.stack-row:nth-child(odd) .tech-pill:nth-child(3n+1) { border-color: rgba(245,185,66,.35); }
-.stack-row:nth-child(even) .tech-pill:nth-child(3n+2) { border-color: rgba(34,211,238,.35); }
+.how-step { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: clamp(1rem, 2.4vw, 1.8rem); align-items: start; }
+.how-marker {
+  position: relative; z-index: 1; display: grid; place-items: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--solid); border: 1px solid rgba(245,185,66,.4);
+  box-shadow: 0 0 0 6px rgba(5,8,15,.9), var(--glow-gold);
+}
+.how-marker span { font-size: .95rem; font-weight: 800; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.how-card { padding: clamp(1.3rem, 2.4vw, 1.9rem); }
+.how-card h3 { margin-bottom: .6rem; transform: translateZ(calc(var(--lift) * 20px)); }
+.how-card p { color: var(--text-soft); font-size: .99rem; transform: translateZ(calc(var(--lift) * 12px)); }
 
 /* =====================================================================
-   Partnership — 3D photo stack
+   Terms — transparency
    ===================================================================== */
-.collab-lead { font-style: italic; font-size: 1.2rem; color: var(--text-soft); max-width: 60ch; margin-inline: auto; }
-.collab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
-/* stays in view (and keeps cycling) while the long copy scrolls past */
-.photo-stack { position: sticky; top: 110px; padding: 2rem 3rem 0 0; }
-.photo-stack-scene { position: relative; aspect-ratio: 4 / 3; perspective: 1400px; transform-style: preserve-3d; }
-.photo-card {
-  position: absolute; inset: 0; margin: 0; border-radius: var(--radius); overflow: hidden; cursor: pointer;
-  border: 1px solid var(--line-2); box-shadow: 0 40px 70px -30px rgba(0,0,0,.95);
-  transform:
-    translate3d(calc(var(--d) * 30px), calc(var(--d) * -24px), calc(var(--d) * -110px))
-    rotateY(calc(var(--d) * -9deg)) rotateZ(calc(var(--d) * 3deg));
-  opacity: calc(1 - var(--d) * .22);
-  filter: brightness(calc(1 - var(--d) * .18));
-  transition: transform .9s var(--ease), opacity .9s var(--ease), filter .9s;
+.terms-banner {
+  margin: 0 0 clamp(2rem, 4vw, 3rem); border-radius: 26px; overflow: hidden; position: relative;
+  border: 1px solid rgba(245,185,66,.24); box-shadow: var(--shadow);
 }
-.photo-card[aria-hidden="false"] { cursor: default; }
-.photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-card figcaption {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 2.4rem 1.4rem 1.1rem;
-  font-size: 1.08rem; font-weight: 600; color: #fff;
-  background: linear-gradient(to top, rgba(5,8,15,.9), transparent); transition: opacity .6s;
+.terms-banner img { width: 100%; height: auto; }
+.terms-banner::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 58%, rgba(5,8,15,.6));
 }
-.photo-card[aria-hidden="true"] figcaption { opacity: 0; }
-.photo-stack-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.6rem; padding-right: 3rem; }
-.photo-stack-nav button {
-  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
-  background: var(--surface); border: 1px solid var(--line-2); color: var(--text); transition: background .2s, color .2s, border-color .2s;
+.terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1rem, 2vw, 1.4rem); }
+.terms-card { padding: clamp(1.5rem, 2.8vw, 2.1rem); }
+.terms-shield {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; margin-bottom: 1.1rem;
+  color: var(--gold); background: rgba(245,185,66,.1); border: 1px solid rgba(245,185,66,.28);
+  transform: translateZ(calc(var(--lift) * 24px));
 }
-.photo-stack-nav button:hover { background: var(--gold); color: var(--on-gold); border-color: transparent; }
-.photo-stack-count { font-family: var(--mono); font-size: .85rem; color: var(--muted); min-width: 4ch; text-align: center; }
+.terms-card h3 { margin-bottom: .65rem; transform: translateZ(calc(var(--lift) * 16px)); }
+.terms-card p { color: var(--text-soft); font-size: .98rem; }
 
-.collab-copy p { color: var(--text-soft); margin-bottom: 1.05rem; }
-.collab-notech { background: rgba(34,211,238,.06); border: 1px solid rgba(34,211,238,.2); border-left: 3px solid var(--cyan); padding: 1.05rem 1.25rem; border-radius: 14px; color: var(--text) !important; font-weight: 500; }
-.collab-revenue { background: rgba(245,185,66,.08); border: 1px solid rgba(245,185,66,.25); border-left: 3px solid var(--gold); color: var(--text) !important; border-radius: 14px; padding: 1.1rem 1.3rem; font-weight: 500; }
-.collab-meeting { color: var(--muted) !important; font-style: italic; }
-.collab-closing { font-style: italic; font-size: 1.25rem; color: var(--text) !important; margin: 1.5rem 0 1.6rem !important; }
+.terms-note {
+  display: flex; align-items: flex-start; gap: 1rem; margin-top: clamp(1.4rem, 3vw, 2rem);
+  padding: 1.3rem 1.5rem; border-radius: 18px;
+  background: rgba(34,211,238,.05); border: 1px solid rgba(34,211,238,.25);
+}
+.terms-note-mark { color: var(--cyan); flex: none; margin-top: .15rem; }
+.terms-note p { color: var(--text-soft); font-size: .97rem; }
 
 /* =====================================================================
-   Experience
+   About — who you'd be partnering with
    ===================================================================== */
-.exp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2vw, 1.4rem); }
-.exp-card { padding: 2.2rem 1.6rem; text-align: center; }
-.exp-name { font-weight: 800; font-size: 1.55rem; margin-bottom: .4rem; background: var(--grad-head); -webkit-background-clip: text; background-clip: text; color: transparent; transform: translateZ(calc(var(--lift) * 30px)); }
-.exp-note { color: var(--muted); font-size: .95rem; transform: translateZ(calc(var(--lift) * 15px)); }
-.exp-handle { text-align: center; max-width: 62ch; margin: 2.4rem auto 0; color: var(--text-soft); font-size: 1.1rem; }
+.about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.8rem, 4vw, 3.5rem); align-items: start; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.about-copy .section-head { margin-bottom: 1.8rem; }
+.about-para { color: var(--text-soft); margin-bottom: 1.1rem; }
+.about-builds { margin-top: 1.8rem; padding: 1.5rem 1.7rem; }
+.about-builds h3 { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1rem; }
+.about-builds ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.2rem; }
+.about-builds li { position: relative; padding-left: 1.3rem; color: var(--text-soft); font-size: .93rem; }
+.about-builds li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); font-size: .8rem; }
+.about-figure { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); box-shadow: var(--shadow); position: relative; }
+.about-figure img { width: 100%; height: auto; }
+.about-figure::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 55%, rgba(5,8,15,.5)); }
 
-/* =====================================================================
-   Founders
-   ===================================================================== */
-.founders-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.2rem, 2.5vw, 2rem); }
-.founder-card { display: flex; gap: 1.4rem; padding: clamp(1.6rem, 2.8vw, 2.3rem); }
-.founder-portrait {
-  flex: none; width: 88px; height: 88px; border-radius: 24px; position: relative; overflow: hidden;
-  background: linear-gradient(155deg, #16223a, #0b1220); display: grid; place-items: center;
-  border: 1px solid rgba(245,185,66,.35); box-shadow: 0 14px 30px -14px rgba(245,185,66,.35);
-  transform: translateZ(calc(var(--lift) * 40px));
+.triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.4rem); }
+.triad-card { position: relative; padding: clamp(1.5rem, 2.8vw, 2.1rem); overflow: hidden; }
+.triad-letter {
+  position: absolute; right: .6rem; top: -.9rem; font-size: 6rem; font-weight: 800; line-height: 1;
+  background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent;
+  opacity: .14; pointer-events: none;
 }
-.founder-portrait::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 18%, rgba(245,185,66,.35), transparent 60%); }
-.founder-initials { position: relative; z-index: 1; font-weight: 800; font-size: 1.9rem; color: var(--gold-2); }
-.founder-body { transform: translateZ(calc(var(--lift) * 20px)); }
-.founder-body h3 { font-size: 1.35rem; }
-.founder-role { color: var(--gold); font-weight: 600; margin: .25rem 0 .85rem; }
-.founder-bio { color: var(--text-soft); font-size: .98rem; margin-bottom: 1.05rem; }
-.founder-exp { list-style: none; padding: 0; display: grid; gap: .5rem; }
-.founder-exp li { position: relative; padding-left: 1.4rem; font-size: .92rem; color: var(--text-soft); }
-.founder-exp li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
-.founders-cta { text-align: center; margin-top: clamp(2rem, 4vw, 3rem); }
-
-/* =====================================================================
-   Meaning of ATS
-   ===================================================================== */
-.meaning { overflow: hidden; }
-.meaning-scene { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2rem); perspective: 1300px; }
-.meaning-card { border-radius: var(--radius); }
-.meaning-card.tilt { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
-.meaning-card-inner {
-  position: relative; transform-style: preserve-3d; height: 100%;
-  padding: 2.6rem 2rem 2.3rem; border-radius: var(--radius);
-  background: var(--surface); border: 1px solid var(--line-2); box-shadow: var(--shadow);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  animation: meaningFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * -2s);
-}
-@keyframes meaningFloat { 50% { transform: translate3d(0, -10px, 0); } }
-.meaning-ghost {
-  position: absolute; top: -18px; right: 6px; line-height: 1; pointer-events: none; font-weight: 900; font-size: 8.5rem;
-  background: linear-gradient(180deg, rgba(245,185,66,.24), rgba(245,185,66,0) 85%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  transform: translateZ(calc(var(--lift) * -20px));
-}
-.meaning-badge {
-  display: inline-flex; align-items: center; justify-content: center; width: 58px; height: 58px; border-radius: 16px; margin-bottom: 1.3rem;
-  background: var(--grad-gold); color: var(--on-gold); font-weight: 900; font-size: 1.5rem; box-shadow: var(--glow-gold);
-  transform: translateZ(calc(var(--lift) * 55px));
-}
-.meaning-card:nth-child(2) .meaning-badge { background: var(--grad-tech); color: #04121f; box-shadow: 0 12px 40px -12px rgba(34,211,238,.6); }
-.meaning-card h3 { font-size: 1.6rem; margin-bottom: .6rem; transform: translateZ(calc(var(--lift) * 35px)); }
-.meaning-card p { color: var(--text-soft); font-size: 1rem; transform: translateZ(calc(var(--lift) * 20px)); }
-
-.meaning-triads { margin-top: clamp(2.4rem, 4.5vw, 3.4rem); }
-.meaning-triads-label { text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 1.4rem; }
-.triad-rows { display: grid; gap: .8rem; max-width: 840px; margin-inline: auto; }
-.triad-row {
-  display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 1.2rem; padding: 1rem 1.4rem; border-radius: 16px;
-  background: var(--surface); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  transition: transform .3s var(--ease), border-color .3s;
-}
-.triad-row:hover { transform: translateX(6px); border-color: rgba(245,185,66,.3); }
-.triad-theme { font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
-.triad-words { font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: var(--text); display: flex; flex-wrap: wrap; align-items: baseline; font-weight: 600; }
-.triad-word { display: inline-flex; align-items: baseline; }
-.triad-word b { color: var(--gold); font-weight: 800; }
-.triad-dot { color: #4b586c; margin: 0 .55rem; }
-
-/* =====================================================================
-   Align → Trust → Share
-   ===================================================================== */
-.partner-flow { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 3vw, 2.4rem); }
-.partner-line {
-  position: absolute; top: 64px; left: 16%; right: 16%; height: 2px; z-index: 0;
-  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--gold)); opacity: .6; border-radius: 2px; overflow: hidden;
-}
-.partner-line::after {
-  content: ""; position: absolute; top: -3px; left: 0; width: 80px; height: 8px; border-radius: 8px;
-  background: radial-gradient(closest-side, #fff, rgba(255,210,122,.8), transparent);
-  animation: partnerPulse 3.6s var(--ease) infinite;
-}
-@keyframes partnerPulse { from { transform: translateX(-80px); } to { transform: translateX(100vw); } }
-.partner-step { position: relative; z-index: 1; padding: 2rem 1.8rem; text-align: center; }
-.partner-flow .partner-step { background: linear-gradient(160deg, rgba(18,27,46,.94), rgba(11,18,32,.94)); }
-.partner-orb {
-  position: relative; display: grid; place-items: center; width: 92px; height: 92px; margin: -0.4rem auto 1.4rem;
-  border-radius: 50%; transform: translateZ(calc(var(--lift) * 50px));
-  background: radial-gradient(circle at 35% 30%, #1d2a44, #0a101d 70%); border: 1px solid var(--line-2);
-  box-shadow: inset 0 0 30px rgba(59,130,246,.25), 0 20px 40px -20px rgba(0,0,0,.9);
-}
-.partner-orb::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1px dashed rgba(34,211,238,.35); animation: orbSpin 14s linear infinite; }
-.partner-step:nth-child(4) .partner-orb::before { border-color: rgba(245,185,66,.45); }
-@keyframes orbSpin { to { transform: rotate(360deg); } }
-.partner-letter { font-size: 2.2rem; font-weight: 900; background: var(--grad-tech); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.partner-step:nth-child(4) .partner-letter { background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; }
-.partner-no { display: block; font-size: .74rem; letter-spacing: .18em; color: var(--muted); font-weight: 700; margin-bottom: .4rem; transform: translateZ(calc(var(--lift) * 25px)); }
-.partner-step h3 { font-size: 1.5rem; margin-bottom: .6rem; transform: translateZ(calc(var(--lift) * 30px)); }
-.partner-step p { color: var(--text-soft); font-size: 1rem; transform: translateZ(calc(var(--lift) * 18px)); }
-.partner-motto { text-align: center; margin-top: clamp(2rem, 4vw, 3rem); font-size: clamp(1.15rem, 2.2vw, 1.45rem); font-weight: 700; }
-
-/* =====================================================================
-   Why collaborate — bento
-   ===================================================================== */
-.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.4rem); }
-.why-card { padding: clamp(1.6rem, 2.6vw, 2.2rem); }
-.why-card--lead { grid-column: span 2; background: linear-gradient(160deg, rgba(245,185,66,.1), rgba(14,21,37,.7)); border-color: rgba(245,185,66,.25); }
-.why-card h3 { font-size: 1.25rem; margin-bottom: .7rem; transform: translateZ(calc(var(--lift) * 25px)); }
-.why-card--lead h3 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
-.why-card > p { color: var(--text-soft); margin-bottom: 1.1rem; transform: translateZ(calc(var(--lift) * 15px)); }
-.why-points { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; transform: translateZ(calc(var(--lift) * 20px)); }
-.why-points li { font-size: .82rem; color: var(--text); background: rgba(255,255,255,.04); border: 1px solid var(--line-2); border-radius: 999px; padding: .36rem .85rem; }
-.why-card--lead .why-points li { background: rgba(245,185,66,.08); border-color: rgba(245,185,66,.3); }
-
-/* =====================================================================
-   Philosophy
-   ===================================================================== */
-.philosophy { overflow: hidden; }
-.philosophy-kicker { display: flex; width: fit-content; margin-inline: auto; }
-.philosophy-quote { position: relative; font-weight: 700; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.25; text-align: center; max-width: 24ch; margin: 1.2rem auto 3rem; color: var(--text); letter-spacing: -0.02em; }
-.philosophy-quote::before { content: "\201C"; color: var(--gold); }
-.philosophy-quote::after { content: "\201D"; color: var(--gold); }
-.philosophy-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 2.5vw, 2rem); max-width: 1040px; margin-inline: auto; }
-.philosophy-para { color: var(--text-soft); font-size: 1rem; line-height: 1.75; padding-top: 1.1rem; border-top: 2px solid; border-image: linear-gradient(90deg, var(--gold), transparent) 1; }
-
-/* =====================================================================
-   Results / revenue chart
-   ===================================================================== */
-.results-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
-.results-copy p { color: var(--text-soft); margin-bottom: 1rem; }
-.results-stats { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: clamp(1rem, 3vw, 2.4rem); margin-top: 1.6rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
-.results-stat { display: flex; flex-direction: column; }
-.rs-value { font-weight: 800; font-size: 2.1rem; line-height: 1.1; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.rs-label { font-size: .85rem; color: var(--muted); }
-.results-chart { margin: 0; padding: clamp(1rem, 2vw, 1.6rem); }
-.results-chart svg { width: 100%; height: auto; display: block; overflow: visible; }
-.results-chart figcaption { text-align: center; color: var(--muted); font-size: .82rem; margin-top: .7rem; }
-.chart-axis { fill: var(--muted); font-size: 12px; font-family: var(--sans); }
-.chart-axis--title { fill: var(--text-soft); font-weight: 600; }
-.chart-value { fill: var(--gold-2); font-size: 14px; font-weight: 800; font-family: var(--sans); }
-.chart-zone { fill: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-family: var(--sans); }
-.chart-zone--accent { fill: var(--gold); }
-
-/* =====================================================================
-   News — 3D cards
-   ===================================================================== */
-.news-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 2.2rem; }
-.more-link { display: inline-flex; align-items: center; gap: .4rem; color: var(--gold); font-weight: 600; font-size: .92rem; white-space: nowrap; margin-bottom: 1.4rem; }
-.more-link svg { transition: transform .2s var(--ease); }
-.more-link:hover svg { transform: translateX(3px); }
-.news-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1rem, 2vw, 1.3rem); }
-.news-card a { display: flex; flex-direction: column; gap: 1rem; height: 100%; min-height: 220px; padding: 1.5rem; }
-.news-meta { display: flex; justify-content: space-between; align-items: center; gap: .6rem; transform: translateZ(calc(var(--lift) * 20px)); }
-.news-cat { font-size: .72rem; font-weight: 700; color: var(--cyan); border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.07); border-radius: 999px; padding: .24rem .7rem; }
-.news-date { color: var(--muted); font-size: .82rem; font-family: var(--mono); }
-.news-title { font-size: 1.08rem; font-weight: 600; color: var(--text); line-height: 1.45; transform: translateZ(calc(var(--lift) * 30px)); transition: color .2s, transform .5s var(--ease); }
-.news-arrow { margin-top: auto; color: var(--gold); transition: transform .3s var(--ease); }
-.news-card:hover .news-title { color: var(--gold-2); }
-.news-card:hover .news-arrow { transform: translateX(6px); }
+.triad-card h3 { margin-bottom: .6rem; transform: translateZ(calc(var(--lift) * 22px)); }
+.triad-card p { color: var(--text-soft); font-size: .96rem; }
 
 /* =====================================================================
    Company — fact tiles
@@ -637,7 +456,7 @@ em { font-style: normal; color: var(--gold); }
 .faq-a p { color: var(--text-soft); font-size: .99rem; }
 
 /* =====================================================================
-   Contact
+   Contact / application
    ===================================================================== */
 .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.2rem, 3vw, 2rem); align-items: start; }
 .contact-card { padding: clamp(1.6rem, 3vw, 2.4rem); }
@@ -665,7 +484,7 @@ em { font-style: normal; color: var(--gold); }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .form-submit { width: 100%; margin-top: .3rem; }
 .form-submit:disabled { opacity: .7; cursor: progress; }
-.form-error { color: #fca5a5; font-size: .9rem; background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.3); border-radius: 12px; padding: .6rem .8rem; }
+.form-error { color: var(--rose); font-size: .9rem; background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.3); border-radius: 12px; padding: .6rem .8rem; }
 .form-fineprint { font-size: .8rem; color: var(--muted); text-align: center; }
 .form-success { text-align: center; padding: 2rem 1rem; display: grid; justify-items: center; gap: .6rem; }
 .form-success h4 { font-size: 1.35rem; }
@@ -698,7 +517,7 @@ em { font-style: normal; color: var(--gold); }
 .footer-cta-title { font-size: clamp(2rem, 5vw, 3.6rem); max-width: 18ch; margin: 0 auto 2rem; background: var(--grad-head); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .footer-inner { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.5rem; }
 .footer-brand .brand { margin-bottom: 1rem; }
-.footer-brand p { color: var(--muted); font-size: .95rem; max-width: 32ch; }
+.footer-brand p { color: var(--muted); font-size: .95rem; max-width: 34ch; }
 .footer-nav { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem 1.5rem; align-content: start; }
 .footer-nav a { color: var(--text-soft); font-size: .95rem; width: fit-content; transition: color .2s; }
 .footer-nav a:hover { color: var(--gold); }
@@ -730,34 +549,24 @@ em { font-style: normal; color: var(--gold); }
    ===================================================================== */
 @media (max-width: 1080px) {
   .nav a:not(.nav-cta) { padding: .45rem .55rem; font-size: .86rem; }
-  .news-grid { grid-template-columns: repeat(2, 1fr); }
+  .deal-grid { grid-template-columns: 1fr; }
+  .deal-card { flex-direction: row; align-items: stretch; }
+  .deal-art { flex: 0 0 38%; aspect-ratio: auto; }
+  .deal-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 }
 @media (max-width: 920px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { order: -1; max-width: 420px; }
+  .hero-figure { order: -1; max-width: 620px; justify-self: center; }
   .scroll-cue { display: none; }
-  .bento { grid-template-columns: 1fr 1fr; }
-  .bento-card--feature { grid-row: auto; grid-column: span 2; min-height: 380px; }
-  .bento-card:nth-child(2) { grid-column: auto; }
-  .approach-inner { min-height: 0; }
-  .approach-track { flex-direction: column; }
-  .approach-card { width: 100%; min-height: 0; }
-  .collab-grid { grid-template-columns: 1fr; }
-  .photo-stack { position: relative; top: auto; max-width: 560px; margin-inline: auto; width: 100%; }
-  .founders-grid { grid-template-columns: 1fr; }
-  .meaning-scene { grid-template-columns: 1fr; }
-  .partner-flow { grid-template-columns: 1fr; }
-  .partner-line { top: 0; bottom: 0; left: 50%; right: auto; width: 2px; height: auto; background: linear-gradient(180deg, var(--cyan), var(--blue), var(--gold)); }
-  .partner-line::after { display: none; }
-  .why-grid { grid-template-columns: 1fr 1fr; }
-  .results-grid { grid-template-columns: 1fr; }
-  .exp-grid { grid-template-columns: repeat(2, 1fr); }
-  .philosophy-grid { grid-template-columns: 1fr 1fr; }
+  .who-grid { grid-template-columns: 1fr; }
+  .who-figure { position: static; max-width: 620px; margin-inline: auto; }
+  .terms-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-figure { max-width: 620px; margin-inline: auto; }
+  .triad { grid-template-columns: 1fr; }
   .fact-grid { grid-template-columns: 1fr 1fr; }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-head { position: static; }
-  .stack-row { grid-template-columns: 1fr; gap: .5rem; }
-  .stack-row-label { text-align: left; }
 }
 @media (max-width: 900px) {
   .contact-layout { grid-template-columns: 1fr; }
@@ -769,22 +578,16 @@ em { font-style: normal; color: var(--gold); }
   .footer-inner { grid-template-columns: 1fr; gap: 1.8rem; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .hero-stats > div:nth-child(3) { grid-column: span 2; border-left: 0; border-top: 1px solid var(--line); }
-  .hero-chip { font-size: .8rem; }
-  .hero-chip--a { left: 0; }
-  .hero-chip--t { right: 0; }
   .field-row { grid-template-columns: 1fr; }
-  .bento { grid-template-columns: 1fr; }
-  .bento-card--feature { grid-column: auto; }
-  .why-grid, .exp-grid, .philosophy-grid, .fact-grid, .news-grid { grid-template-columns: 1fr; }
-  .why-card--lead { grid-column: auto; }
-  .founder-card { flex-direction: column; }
-  .triad-row { grid-template-columns: 1fr; gap: .4rem; }
-  .strip-inner { flex-direction: column; align-items: flex-start; gap: .6rem; }
-  .strip .marquee { width: 100%; }
-  .photo-stack { padding: 1.4rem 1.6rem 0 0; }
-  .photo-stack-nav { padding-right: 1.6rem; }
-  .news-head { flex-direction: column; align-items: flex-start; }
-  .results-stats { gap: 1.2rem; }
+  .deal-card { flex-direction: column; }
+  .deal-art { flex: none; aspect-ratio: 16 / 10; }
+  .how-step { grid-template-columns: 44px 1fr; gap: 1rem; }
+  .how-marker { width: 44px; height: 44px; }
+  .how-marker span { font-size: .84rem; }
+  .how-rail { left: 21px; }
+  .about-builds ul { grid-template-columns: 1fr; }
+  .fact-grid { grid-template-columns: 1fr; }
+  .triad-letter { font-size: 4.5rem; }
 }
 @media (max-width: 420px) {
   body { font-size: 16px; }
@@ -823,3 +626,267 @@ em { font-style: normal; color: var(--gold); }
   backdrop-filter: blur(1px);
 }
 
+/* =====================================================================
+   CARTOON LAYER
+   ---------------------------------------------------------------------
+   Appended on purpose rather than folded into the rules above, so the
+   whole look can be tuned (or lifted out) in one place while we settle
+   on it. Once it is signed off it should be merged upward.
+
+   The palette does NOT change: the tiger/eagle artwork is itself navy and
+   gold with sunset light, so recolouring the page to cream paper made the
+   images read as pasted-on rectangles. What changes is the FORM —
+
+     glass + glow  ->  solid panels, chunky outlines, hard offset shadows
+     thin type     ->  Baloo 2, heavy and rounded
+     soft fades    ->  press-down hovers
+     straight grid ->  badges and cards tilted a degree or two
+   ===================================================================== */
+
+:root {
+  --bw:      3px;                     /* outline weight */
+  --pop:     6px;                     /* shadow offset  */
+  --edge:    #4a5f9e;                 /* outline on dark */
+  --edge-au: #8a6410;                 /* outline on gold */
+  --panel:   #141f3a;                 /* raised surface */
+  --panel-2: #1b2950;
+  --void:    #04060d;                 /* the hard shadow colour */
+  --hard:    var(--pop) var(--pop) 0 var(--void);
+  --hard-sm: 4px 4px 0 var(--void);
+  --hard-lg: 10px 10px 0 var(--void);
+  --display: var(--font-display), var(--jp), system-ui, sans-serif;
+  --radius:  24px;
+}
+
+/* ---------- type ---------- */
+h1, h2, h3, h4,
+.btn, .nav-cta, .nav > a, .brand-text, .lang-btn,
+.section-kicker, .eyebrow, .deal-role, .deal-step, .how-marker,
+.hero-stats dt, .fact dd, .fact dt, .triad-letter, .about-builds li,
+.faq-q button, .cp-label, .field label, .scroll-top-label, .footer-jp,
+.footer-nav a, .contact-card-title, .form-success h4 {
+  font-family: var(--display);
+  font-weight: 800;
+}
+body { font-weight: 500; }
+
+/* Flat fills instead of gradient text — a cartoon has no gradients. */
+.hero-title .line-inner,
+.section-head h2, h2, h3 {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--text);
+}
+.hero-title { letter-spacing: -.02em; }
+.hero-title .line-inner { text-shadow: 5px 5px 0 rgba(4, 6, 13, .5); }
+.section-head h2 { text-shadow: 4px 4px 0 rgba(4, 6, 13, .45); }
+.text-gold, .hero-title .text-gold { color: var(--gold); }
+
+/* ---------- raised surfaces ---------- */
+.deal-card, .how-card, .terms-card, .fact, .triad-card, .contact-card,
+.faq-item, .who-list, .about-builds, .contact-panel, .terms-note,
+.hero-figure, .who-figure, .about-figure, .terms-banner, .footer-cta {
+  background: var(--panel);
+  border: var(--bw) solid var(--edge);
+  border-radius: var(--radius);
+  box-shadow: var(--hard);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.hero-stats > div { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* a couple of degrees of tilt, so the page looks hand-placed */
+.deal-card:nth-child(1), .terms-card:nth-child(2n), .fact:nth-child(3n) { rotate: -1deg; }
+.deal-card:nth-child(3), .terms-card:nth-child(3n), .fact:nth-child(2n) { rotate: 1deg; }
+.triad-card:nth-child(2) { rotate: -1.2deg; }
+.who-figure { rotate: -1.5deg; }
+.about-figure, .hero-figure { rotate: 1.5deg; }
+
+/* artwork sits in a thick frame */
+.hero-figure, .who-figure, .about-figure, .terms-banner { overflow: hidden; }
+.hero-figure::after { display: none; }   /* no vignette; flat art reads better */
+.deal-art { border-bottom: var(--bw) solid var(--edge); }
+
+/* ---------- badges & stickers ---------- */
+.section-kicker, .eyebrow {
+  background: var(--gold);
+  color: var(--on-gold);
+  border: var(--bw) solid var(--edge-au);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--void);
+  rotate: -2deg;
+  text-shadow: none;
+}
+.section-head--center .section-kicker { rotate: 1.5deg; }
+.eyebrow .tick { background: var(--on-gold); box-shadow: none; }
+
+.deal-step, .how-marker {
+  background: var(--gold);
+  color: var(--on-gold);
+  border: var(--bw) solid var(--edge-au);
+  box-shadow: 3px 3px 0 var(--void);
+}
+.deal-step { rotate: -8deg; }
+.how-step:nth-child(even) .how-marker { background: var(--cyan); border-color: #0e6f80; }
+
+/* A role pill hugs its text — as a block-level <p> it stretched the full
+   width of the card and read as a coloured bar. */
+.deal-role, .about-builds li {
+  display: inline-block;
+  width: auto;
+  border: 2px solid var(--edge);
+  border-radius: 999px;
+  background: var(--panel-2);
+  box-shadow: 2px 2px 0 var(--void);
+}
+.deal-card:nth-child(1) .deal-role { background: var(--gold); color: var(--on-gold); border-color: var(--edge-au); }
+.deal-card:nth-child(2) .deal-role { background: var(--blue); color: #fff; border-color: #1b4ea8; }
+.deal-card:nth-child(3) .deal-role { background: var(--cyan); color: #06303a; border-color: #0e6f80; }
+
+/* The step number is set in gold by the base rules, which on a gold or cyan
+   disc leaves it unreadable. Force the dark-on-bright pairing. */
+.how-marker, .how-marker span, .deal-step {
+  color: var(--on-gold);
+  -webkit-text-fill-color: var(--on-gold);
+  background-image: none;
+}
+.how-step:nth-child(even) .how-marker,
+.how-step:nth-child(even) .how-marker span { color: #06303a; -webkit-text-fill-color: #06303a; }
+.how-marker { width: 56px; height: 56px; font-size: 1.15rem; }
+
+/* ---------- buttons: press into your own shadow ---------- */
+.btn, .nav-cta {
+  border: var(--bw) solid var(--edge);
+  border-radius: 999px;
+  box-shadow: var(--hard-sm);
+  transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
+}
+.btn::before, .nav-cta::before { display: none; }   /* kill the sheen sweep */
+.btn:hover, .nav-cta:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--void); }
+.btn:active, .nav-cta:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--void); }
+.btn-primary, .nav-cta {
+  background: var(--gold);
+  color: var(--on-gold);
+  border-color: var(--edge-au);
+  filter: none;
+}
+.btn-primary:hover, .nav-cta:hover { background: var(--gold-2); }
+.btn-ghost { background: var(--panel-2); color: var(--text); }
+.btn-ghost:hover { background: var(--panel); }
+
+/* ---------- header ---------- */
+.site-header { border-bottom: var(--bw) solid var(--edge); }
+.nav > a { border-radius: 999px; }
+.nav > a.active { background: var(--gold); color: var(--on-gold); }
+.lang-switch { border: 2px solid var(--edge); border-radius: 999px; }
+.lang-btn.active { background: var(--gold); color: var(--on-gold); }
+.nav-toggle { border: var(--bw) solid var(--edge); border-radius: 14px; box-shadow: 3px 3px 0 var(--void); }
+
+/* ---------- forms ---------- */
+.field input, .field select, .field textarea {
+  background: var(--solid);
+  border: var(--bw) solid var(--edge);
+  border-radius: 14px;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: var(--hard-sm);
+  outline: none;
+}
+
+/* ---------- FAQ: a stack of speech bubbles ---------- */
+.faq-item { overflow: hidden; }
+.faq-item.open { border-color: var(--gold); box-shadow: var(--hard-lg); }
+.faq-icon {
+  background: var(--gold); color: var(--on-gold);
+  border: 2px solid var(--edge-au); border-radius: 50%;
+  width: 32px; height: 32px; padding: 6px;
+}
+
+/* ---------- hover: lift, don't glow ---------- */
+.tilt { transition: transform .18s ease, box-shadow .18s ease; }
+.tilt.tilting { transform: translate(-3px, -5px); box-shadow: var(--hard-lg); }
+.tilt.tilting.gsap-animating { transform: none; }
+
+/* ---------- straighten up on small screens ---------- */
+@media (max-width: 560px) {
+  :root { --bw: 2.5px; --pop: 5px; }
+  .deal-card, .terms-card, .fact, .triad-card, .who-figure, .about-figure,
+  .hero-figure, .section-kicker, .eyebrow { rotate: 0deg; }
+}
+
+/* =====================================================================
+   THE SKY  (components/SkyBackground.tsx)
+   ---------------------------------------------------------------------
+   The artwork is blue sky, snow peaks and golden-hour light. The page was
+   near-black with a cyan particle grid, so every image read as a bright
+   rectangle pasted onto a dark slab. This puts the page in the same world
+   as the characters.
+
+   It deliberately stays DARK ENOUGH that every light-on-dark rule above
+   keeps working — a change of world, not a change of contrast. And it is
+   fixed, not scrolling: one place, seen from one spot.
+   ===================================================================== */
+
+:root {
+  --bg:      #0b1f3d;
+  --solid:   #0e2a4c;
+  --panel:   #11294a;
+  --panel-2: #183760;
+  --edge:    #4d77b5;
+  --void:    #04101f;
+  --line:    rgba(173, 205, 240, .16);
+  --line-2:  rgba(173, 205, 240, .3);
+}
+
+html { background: #071a36; }
+body { background: transparent; }
+
+.sky {
+  position: fixed; inset: 0; z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(180deg,
+    #071a36 0%, #0d2b52 38%, #16426e 72%, #1d5480 100%);
+}
+/* the sun, low and to the right, exactly where it sits in the hero art */
+.sky-sun {
+  position: absolute; inset: 0;
+  background: radial-gradient(58% 46% at 80% 14%, rgba(255, 199, 112, .30), transparent 60%);
+}
+/* warm haze along the horizon */
+.sky-haze {
+  position: absolute; inset: 0;
+  background: radial-gradient(90% 45% at 50% 104%, rgba(245, 185, 66, .16), transparent 62%);
+}
+
+.sky-clouds { position: absolute; inset: 0; }
+.sky-clouds span {
+  position: absolute;
+  color: rgba(226, 240, 255, .07);
+  animation-name: drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes drift {
+  from { transform: translateX(-26vw); }
+  to   { transform: translateX(126vw); }
+}
+@media (prefers-reduced-motion: reduce) { .sky-clouds span { animation: none; } }
+
+/* Sections must not paint over the sky. */
+/* Alternating sections used to be a darker block. Over a continuous sky that
+   reads as a stripe painted across it, so they are transparent now and the
+   rhythm comes from the panels instead. */
+.section-alt { background: transparent; border-block: 0; }
+.site-header { background: rgba(8, 24, 48, .92); backdrop-filter: blur(10px); }
+.site-footer { background: rgba(5, 16, 33, .9); }
+
+/* Panels are a touch bluer so they belong to the sky rather than to the
+   old near-black page. */
+.deal-card, .how-card, .terms-card, .fact, .triad-card, .contact-card,
+.faq-item, .who-list, .about-builds, .contact-panel, .terms-note,
+.hero-figure, .who-figure, .about-figure, .terms-banner {
+  background: var(--panel);
+  border-color: var(--edge);
+}
+.hero-stats > div { background: rgba(17, 41, 74, .72); }

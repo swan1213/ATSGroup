@@ -3,6 +3,9 @@
  * English is the default; Japanese and Chinese are secondary languages.
  * Strings are consumed via the useT() hook (see components/LanguageProvider).
  * FAQ content lives separately in lib/faq.ts.
+ *
+ * Image paths are locale-independent and live in lib/site.ts — only the
+ * alt text is translated here.
  */
 
 export const locales = ["en", "ja", "zh"] as const;
@@ -16,68 +19,42 @@ export const localeNames: Record<Locale, string> = {
 };
 
 type Dict = {
-  nav: { skills: string; why: string; approach: string; collaboration: string; team: string; faq: string; contact: string; company: string; news: string };
-  news: {
-    kicker: string; title: string; more: string;
-    items: { date: string; cat: string; title: string }[];
+  nav: { offer: string; how: string; terms: string; about: string; faq: string; apply: string };
+  hero: {
+    eyebrow: string;
+    l1: string; l2: string;
+    lede: string;
+    cta: string; secondary: string;
+    imgAlt: string;
+    stats: { dt: string; dd: string }[];
+  };
+  deal: {
+    kicker: string; title: string; sub: string;
+    items: { role: string; title: string; body: string; alt: string }[];
+  };
+  who: {
+    kicker: string; title: string; sub: string; imgAlt: string;
+    forTitle: string; forItems: string[];
+    notTitle: string; notItems: string[];
+  };
+  how: {
+    kicker: string; title: string; sub: string;
+    steps: { no: string; title: string; body: string }[];
+  };
+  terms: {
+    kicker: string; title: string; sub: string; imgAlt: string;
+    rows: { title: string; body: string }[];
+    note: string;
+  };
+  about: {
+    kicker: string; title: string; imgAlt: string;
+    paras: string[];
+    triad: { letter: string; word: string; body: string }[];
+    buildTitle: string; builds: string[];
   };
   company: {
     kicker: string; title: string;
     rows: { label: string; value: string }[];
-  };
-  hero: {
-    eyebrow: string;
-    l1: string; l2: string; l3a: string; em: string; l3b: string;
-    lede: string;
-    cta: string; secondary: string;
-    stats: { dt: string; dd: string }[];
-  };
-  trust: { label: string; items: string[] };
-  meaning: {
-    kicker: string; title: string; sub: string;
-    items: { num: string; word: string; body: string }[];
-    triadsLabel: string;
-    triads: { theme: string; words: string[] }[];
-  };
-  partner: {
-    kicker: string; title: string; sub: string; motto: string;
-    steps: { letter: string; word: string; body: string }[];
-  };
-  skills: {
-    kicker: string; title: string; sub: string;
-    items: { num: string; title: string; body: string; tags: string[]; alt: string }[];
-  };
-  experience: {
-    kicker: string; title: string; sub: string; handleAll: string;
-    items: { name: string; note: string }[];
-  };
-  results: {
-    kicker: string; title: string; sub: string;
-    intro: string[];
-    prep: string; ramp: string; axisX: string; axisY: string; note: string;
-    stats: { value: string; label: string }[];
-  };
-  why: {
-    kicker: string; title: string; sub: string;
-    blocks: { q: string; a: string; points: string[] }[];
-  };
-  approach: {
-    kicker: string; title: string; sub_a: string; sub_em: string; sub_b: string;
-    steps: { no: string; title: string; body: string }[];
-  };
-  stack: {
-    kicker: string; title: string; sub: string;
-    columns: { title: string; items: string[] }[];
-  };
-  collab: {
-    kicker: string; title: string; lead: string;
-    paras: string[]; noTech: string; revenue: string; meetingNote: string; closing: string; cta: string;
-    slides: { alt: string; caption: string }[];
-  };
-  philosophy: { kicker: string; quote: string; paras: string[] };
-  founders: {
-    kicker: string; title: string; sub: string;
-    people: { initials: string; name: string; role: string; bio: string; experience: string[] }[];
   };
   faqHead: { kicker: string; title: string; sub: string };
   contact: {
@@ -85,874 +62,707 @@ type Dict = {
     formTitle: string; formSub: string;
     name: string; namePh: string;
     email: string; emailPh: string;
-    company: string; companyPh: string;
-    help: string; helpPh: string; services: string[];
+    loc: string; locPh: string;
+    network: string; networkPh: string; networks: string[];
     message: string; messagePh: string;
     submit: string; submitting: string;
     successTitle: string; successBody: string; sendAnother: string;
-    errorGeneric: string;
-    fineprint: string;
+    errorGeneric: string; fineprint: string;
     points: { label: string; value: string }[];
-    bookingTitle: string; bookingSub: string; fallback: string; fallbackLink: string;
+    bookingTitle: string; bookingSub: string;
+    fallback: string; fallbackLink: string;
   };
   footer: { blurb: string; location: string; schedule: string; rights: string; tagline: string };
 };
 
 const en: Dict = {
-  nav: { skills: "Services", why: "Why us", approach: "Approach", collaboration: "Partnership", team: "Founders", faq: "FAQ", contact: "Contact us", company: "Company", news: "News" },
-  news: {
-    kicker: "News", title: "Latest updates", more: "View all news",
-    items: [
-      { date: "2026.06.20", cat: "Notice", title: "ATS Group corporate website renewed." },
-      { date: "2026.05.15", cat: "Project", title: "Aligner AI project is now underway." },
-      { date: "2026.04.02", cat: "Service", title: "AI automation partnership program launched." },
-      { date: "2026.02.10", cat: "Notice", title: "Now accepting partnership inquiries from the US and Canada." },
+  nav: { offer: "The offer", how: "How it works", terms: "Terms", about: "About us", faq: "FAQ", apply: "Apply" },
+
+  hero: {
+    eyebrow: "ATS Group · Tokyo, Japan",
+    l1: "Looking for an",
+    l2: "American Partner",
+    lede:
+      "We are a software and AI studio in Tokyo. We have the engineering capacity and the work to sell — what we do not have is someone on the ground in the United States. If that is you, there is a straightforward arrangement to be made.",
+    cta: "Apply as a partner",
+    secondary: "See how it works",
+    imgAlt:
+      "A tiger and a bald eagle in business suits shaking hands in front of a US flag and a city skyline",
+    stats: [
+      { dt: "$0", dd: "to become a partner" },
+      { dt: "Written", dd: "terms before anything starts" },
+      { dt: "Tokyo", dd: "engineering team behind you" },
     ],
   },
+
+  deal: {
+    kicker: "The offer",
+    title: "A clear split of who does what.",
+    sub: "Three sentences describe the whole arrangement. Everything else on this page is detail.",
+    items: [
+      {
+        role: "We bring",
+        title: "The opportunities.",
+        body:
+          "Real engineering and AI work from our Tokyo studio: web platforms, automation, AI integration, CMS and CRM builds. We scope it, price it, build it and support it. You are never selling something that does not exist yet.",
+        alt: "Close-up of the tiger in a suit with a gold paw-print lapel pin",
+      },
+      {
+        role: "You bring",
+        title: "The local connections.",
+        body:
+          "You know businesses in the US that need this work, and you can get a first conversation started. Introductions, meetings, and the credibility that only comes from being local. No technical background is required.",
+        alt: "Close-up of the bald eagle in a suit with a US flag lapel pin",
+      },
+      {
+        role: "Together",
+        title: "We share the profit.",
+        body:
+          "When a deal closes, you take an agreed share of the profit on it. The percentage is written down before we begin and it does not change afterwards. No clawbacks, no moving targets.",
+        alt: "A tiger paw and a human hand in a firm handshake",
+      },
+    ],
+  },
+
+  who: {
+    kicker: "Who this is for",
+    title: "The right partner, not the most partners.",
+    sub: "We are looking for one or two people to work with properly, not a list of names. It is worth being honest about the fit in both directions.",
+    imgAlt: "The tiger in a suit surrounded by a group of eagles in business attire",
+    forTitle: "This fits if",
+    forItems: [
+      "You live and work in the United States and have a genuine professional network.",
+      "You have sold services before — or you simply know a lot of the right people.",
+      "You can take a first meeting and explain a straightforward offer in plain language.",
+      "You are interested in something ongoing rather than a single introduction.",
+      "You are comfortable having the terms in writing and signing them.",
+    ],
+    notTitle: "This is not for you if",
+    notItems: [
+      "You are looking for a salaried position — this is a partnership, paid from results.",
+      "You need to be paid before anything has closed.",
+      "You would rather keep the arrangement informal and undocumented.",
+      "You are expecting guaranteed income. Nobody can honestly promise that.",
+    ],
+  },
+
+  how: {
+    kicker: "How it works",
+    title: "Four steps. No surprises.",
+    sub: "From the first message to the first payout, this is the entire process.",
+    steps: [
+      {
+        no: "01",
+        title: "Introduce yourself",
+        body:
+          "Send a short message: where you are, the kind of businesses you have access to, and what you have done before. If it looks like a fit, we book a 30-minute call. No pitch deck required.",
+      },
+      {
+        no: "02",
+        title: "Agree the terms in writing",
+        body:
+          "We put the profit split, who is responsible for what, and how either side can walk away into one short document. You read it, you change what you want changed, we both sign. Nothing starts before that.",
+      },
+      {
+        no: "03",
+        title: "Make the introductions",
+        body:
+          "You open the door and stay in the room. We handle scoping, pricing, delivery, and support. You are copied on anything that touches your contacts, so you always know what is being said in your name.",
+      },
+      {
+        no: "04",
+        title: "Share the profit",
+        body:
+          "The client pays, the work gets delivered, and your agreed share is paid on a fixed schedule. You see the figures the calculation was based on, not just the total.",
+      },
+    ],
+  },
+
+  terms: {
+    kicker: "Transparency",
+    title: "Simple agreement. Full transparency.",
+    sub: "A partner offer that cannot answer these four questions is not worth taking. So here are our answers up front.",
+    imgAlt:
+      "The tiger and the eagle in suits, arm in arm, giving a thumbs up with the Statue of Liberty behind them",
+    rows: [
+      {
+        title: "No upfront payment, ever",
+        body:
+          "You never pay us anything to become a partner. There is no joining fee, no starter kit, no training package, no software licence. If money has to move before you earn, it is moving the wrong way.",
+      },
+      {
+        title: "Everything in writing first",
+        body:
+          "The split, the responsibilities, the payment schedule and the exit terms live in one short document that you get to read and amend before signing. No verbal agreements.",
+      },
+      {
+        title: "Open numbers",
+        body:
+          "You see what the client was invoiced and what the profit on the deal actually was. Your share is calculated from figures you can check, not from a number we hand you.",
+      },
+      {
+        title: "Leave whenever you want",
+        body:
+          "Either side can end the arrangement with notice. Anything already closed still pays out. You are not locked into anything, and neither are we.",
+      },
+    ],
+    note:
+      "We are a software company in Tokyo, not a recruitment scheme. We are not asking you to buy anything, recruit anyone, or move money on our behalf. If an offer like this ever asks you for those things, walk away from it.",
+  },
+
+  about: {
+    kicker: "Who you would be partnering with",
+    title: "ATS Group, Tokyo.",
+    imgAlt: "The tiger in a three-piece suit at a desk with a glowing globe",
+    paras: [
+      "We are a small, senior engineering studio in Tokyo. We build production software and applied AI for businesses — the unglamorous kind of work that has to keep running on Monday morning, not demos.",
+      "The work is good and the team is solid. Our limitation is reach: building trust with a business in the United States from an office in Tokyo is slow, and introductions from someone the client already knows are worth more than any amount of outbound email.",
+      "That is the entire reason this page exists. We are not short of engineers. We are short of an American who can open the right doors.",
+    ],
+    triad: [
+      { letter: "A", word: "Alliance", body: "We work as a partner, not a vendor. Shared goals, shared risk, shared upside." },
+      { letter: "T", word: "Technology", body: "Full-stack engineering and applied AI that solves a real business problem." },
+      { letter: "S", word: "Success", body: "Measured in what the client earns and keeps — which is what you are paid from." },
+    ],
+    buildTitle: "What we actually build",
+    builds: [
+      "Full-stack web platforms and APIs",
+      "AI automation, LLM agents and RAG systems",
+      "CMS builds for marketing teams",
+      "CRM and internal business tooling",
+      "Cloud infrastructure and DevOps",
+      "Ongoing maintenance and support",
+    ],
+  },
+
   company: {
-    kicker: "Company", title: "Company profile",
+    kicker: "Company",
+    title: "Company profile",
     rows: [
       { label: "Company name", value: "ATS Group" },
       { label: "Established", value: "2024" },
       { label: "Location", value: "Tokyo, Japan" },
       { label: "Representatives", value: "Daniel (Hiro Tanaka), Akira Iwata" },
-      { label: "Business", value: "Full-stack development, AI automation, CMS & CRM solutions, AI training" },
-      { label: "Languages", value: "English / 日本語 / 中文" },
+      { label: "Business", value: "Full-stack development, AI automation, CMS & CRM solutions" },
+      { label: "Working languages", value: "English / 日本語 / 中文" },
     ],
   },
-  hero: {
-    eyebrow: "Tokyo, Japan",
-    l1: "We build software", l2: "and the teams", l3a: "that ", em: "ship", l3b: " it.",
-    lede:
-      "ATS Group is a Tokyo-based engineering studio. We deliver production full-stack systems, AI automation, and the kind of hands-on training and partnership that turns an idea into something real.",
-    cta: "Contact us", secondary: "Our skills",
-    stats: [
-      { dt: "10+ yrs", dd: "combined senior delivery" },
-      { dt: "Full-stack", dd: "web, cloud, AI, automation" },
-      { dt: "Worldwide", dd: "remote-friendly partnership" },
-    ],
-  },
-  trust: {
-    label: "Trusted across",
-    items: ["Fintech", "SaaS", "E-commerce", "Healthcare", "Manufacturing", "EdTech"],
-  },
-  meaning: {
-    kicker: "The name",
-    title: "The three letters behind ATS.",
-    sub: "Alliance, Technology, Success. We build long-term partnerships, back them with strong engineering, and measure ourselves by the revenue we help you earn.",
-    items: [
-      { num: "A", word: "Alliance", body: "We work as your partner, not a vendor. We share goals, risks and wins, and we grow together for the long term." },
-      { num: "T", word: "Technology", body: "Software and AI that solve real business problems: cutting costs, opening new revenue streams and scaling what already works." },
-      { num: "S", word: "Success", body: "Shared success measured in results: more customers, more revenue, more profit. When you grow, we grow." },
-    ],
-    triadsLabel: "Three letters, three promises.",
-    triads: [
-      { theme: "How we partner", words: ["Align", "Trust", "Share"] },
-      { theme: "How we build", words: ["Automate", "Transform", "Scale"] },
-      { theme: "What you gain", words: ["Advantage", "Traction", "Sustainable profit"] },
-    ],
-  },
-  partner: {
-    kicker: "How we partner",
-    title: "Align. Trust. Share.",
-    sub: "Our partnership model in three steps, built so both sides earn more together than either could alone.",
-    steps: [
-      { letter: "A", word: "Align", body: "We start with your business goals and revenue targets, then agree on scope, roles and what success looks like, before writing a line of code." },
-      { letter: "T", word: "Trust", body: "Transparent progress, honest communication and senior engineers who deliver what they promise, sprint after sprint." },
-      { letter: "S", word: "Share", body: "We share the risks and the rewards. As your product earns, we grow together, with long-term incentives that keep us invested in your results." },
-    ],
-    motto: "Aligned goals, earned trust, shared profit.",
-  },
-  skills: {
-    kicker: "01 · Skills",
-    title: "What we do, and do well.",
-    sub: "Four core capabilities, one senior team, each built to grow your business.",
-    items: [
-      {
-        num: "01", title: "Full-Stack Development",
-        body: "End-to-end product engineering: clean APIs, considered front-ends, and infrastructure that holds up. From a blank repository to a system your team can own, we write code that still makes sense a year from now.",
-        tags: ["Web apps", "APIs", "Cloud", "DevOps"],
-        alt: "Code editor open on a laptop in a dark workspace",
-      },
-      {
-        num: "02", title: "AI Automation",
-        body: "We put AI to work on the things that quietly drain your week: support, data entry, reporting, routing. RAG pipelines, agents, and integrations that are evaluated, observable, and safe to run in production.",
-        tags: ["LLM agents", "RAG", "Workflows", "Integrations"],
-        alt: "3D AI lettering over a web of connected lines",
-      },
-      {
-        num: "03", title: "CMS Solutions",
-        body: "Content systems your marketing team will actually enjoy using. Headless or traditional, fast and SEO-ready, built so non-technical people can publish with confidence and never wait on a developer.",
-        tags: ["Headless", "WordPress", "Sanity", "SEO"],
-        alt: "Evening desk with monitors showing a website and its code",
-      },
-      {
-        num: "04", title: "CRM Solutions",
-        body: "Customer systems that fit how you actually sell and support, not the other way around. Clean pipelines, useful automation, and the integrations that keep your sales, ops, and data in sync.",
-        tags: ["Sales pipelines", "Automation", "Integrations", "Dashboards"],
-        alt: "Laptop showing a business analytics dashboard",
-      },
-    ],
-  },
-  experience: {
-    kicker: "Track record",
-    title: "Experience you can build on.",
-    sub: "Real, ongoing work, delivered through sincere dedication and genuine, all-out effort.",
-    handleAll: "From the first idea to launch and the years after, we handle the whole stack, so you are never left stitching vendors together.",
-    items: [
-      { name: "Outlier", note: "AI training & model evaluation (ongoing)" },
-      { name: "Mercor", note: "AI talent & data projects (ongoing)" },
-      { name: "Aligner", note: "AI alignment & data quality (ongoing)" },
-      { name: "3 full-stack apps", note: "web platforms in active development" },
-    ],
-  },
-  results: {
-    kicker: "Proof",
-    title: "From an idea to real revenue.",
-    sub: "What collaboration, applied to a single idea, can actually produce.",
-    intro: [
-      "We put our work where our words are. The chart below tracks the average revenue generated per collaborating partner, starting from nothing more than an idea, our engineering, and a shared commitment to make it work.",
-      "The first two months are preparation: research, building, and laying the foundation, with no revenue by design. From the third month real income begins, passing $4,000 per collaborator. By the tenth month it grows to more than $13,000.",
-      "No technical background was required from our partners. These results came from the idea itself, a genuine spirit of collaboration, and the technology we built around it.",
-    ],
-    prep: "Preparation",
-    ramp: "Revenue generation",
-    axisX: "Month",
-    axisY: "Revenue per partner (USD)",
-    note: "Figures shown are per collaborating partner.",
-    stats: [
-      { value: "2 months", label: "preparation period" },
-      { value: "$4K+", label: "by month 3" },
-      { value: "$13K+", label: "by month 10" },
-    ],
-  },
-  why: {
-    kicker: "02 · Why us",
-    title: "Why collaborate with ATS Group?",
-    sub: "Not a vendor you brief and forget. A technology partner that thinks about your business the way you do.",
-    blocks: [
-      {
-        q: "What makes ATS Group different?",
-        a: "We start from your business, not from a stack of tools. Then we bring senior engineering and real AI experience to build something that scales with you.",
-        points: ["Business-first thinking", "Long-term partnerships", "AI & automation expertise", "Modern technology stack", "Transparent communication", "Scalability & future growth"],
-      },
-      {
-        q: "Why should businesses trust us?",
-        a: "Trust is earned in how we deliver: predictably, with quality you can see, and support that does not disappear after launch.",
-        points: ["Commitment to quality", "Reliable delivery process", "Focus on measurable results", "Technical excellence", "Long-term support"],
-      },
-      {
-        q: "What partnerships are we looking for?",
-        a: "We work best with people who think in years, not weeks. If you value a real relationship over a transaction, we should talk.",
-        points: ["Business collaborations", "Strategic partnerships", "Technology partnerships", "Startup collaborations", "Enterprise projects", "Long-term client relationships"],
-      },
-      {
-        q: "How do we approach collaboration?",
-        a: "We listen first, agree on what success looks like, and keep you in the loop the whole way. Accountability runs both directions.",
-        points: ["Understand business goals first", "Transparent communication", "Shared vision & accountability", "Continuous improvement", "Mutual growth & success"],
-      },
-      {
-        q: "What values guide our work?",
-        a: "The same principles guide every decision, whether anyone is watching or not.",
-        points: ["Trust", "Integrity", "Innovation", "Accountability", "Long-term thinking", "Continuous learning"],
-      },
-    ],
-  },
-  approach: {
-    kicker: "03 · Approach",
-    title: "Craft over noise.",
-    sub_a: "We believe in ", sub_em: "steady, deliberate improvement", sub_b: ", applied to how software gets made. Small steps, shipped often. Nothing goes out that we wouldn't run ourselves.",
-    steps: [
-      { no: "I", title: "Listen first", body: "We start with your constraints and your customers, not our favourite framework. The right tool is the one your team can live with." },
-      { no: "II", title: "Build in the open", body: "Short cycles, visible progress, working software early. You see decisions as they happen, never a black box." },
-      { no: "III", title: "Leave it better", body: "We hand over documented, tested systems, and the knowledge to run them. Our goal is to make ourselves optional." },
-    ],
-  },
-  stack: {
-    kicker: "04 · Stack",
-    title: "The tools we reach for.",
-    sub: "Pragmatic, proven, and chosen per project, never cargo-culted.",
-    columns: [
-      { title: "Frontend", items: ["React", "Next.js", "TypeScript", "Vue", "Tailwind"] },
-      { title: "Backend", items: ["Node.js", "Go", "Python", "PostgreSQL", "GraphQL"] },
-      { title: "AI / Automation", items: ["Claude & OpenAI", "LangChain", "n8n / Zapier", "Vector DBs", "RAG"] },
-      { title: "Cloud & Ops", items: ["AWS", "GCP", "Docker", "Kubernetes", "Terraform"] },
-    ],
-  },
-  collab: {
-    kicker: "05 · Partnership",
-    title: "Built together, built to last.",
-    lead: "We're genuinely excited to bring our expertise to the table and help turn your vision into something real.",
-    paras: [
-      "Every result we're proud of started the same way, with people who trusted one another and shared a clear goal. Projects always have their hard moments; what carries them through is steady communication, professionalism, and a real commitment to each other's success.",
-      "To us, collaboration is more than working side by side. It's combining strengths, trading honest ideas, and opening doors none of us could reach alone. Good things get built through consistent effort and a genuine willingness to support the people around you.",
-      "The partnerships we value most aren't about quick wins. They grow over time on a foundation of reliability, mutual respect, and shared long-term goals. When our partners and our team line up behind the same vision, the results tend to outlast the project itself.",
-      "Right now we're looking to connect with professionals, founders, and business-minded people, especially across the United States and Canada, who value real, growth-oriented partnerships. Whether you're focused on expansion, new technology, or simply creating opportunities, we'd love to explore what we could build together.",
-    ],
-    noTech: "And you don't need to be technical to work with us. We bring the engineering and the AI know-how; what we ask for is openness, trust, and a real spirit of collaboration. That, more than anything, is what makes a partnership work.",
-    revenue: "You also don't need a technical background to earn alongside us. Through referral and revenue-share partnerships, your network, market knowledge, and relationships can generate real income, while we quietly handle all of the technical delivery behind the scenes.",
-    meetingNote: "In other words, even without expertise in the field, meaningful results and real revenue can come from working together. We'll walk you through exactly how it works during a short call.",
-    closing: "Together, we can turn ideas into opportunities, and opportunities into something that lasts.",
-    cta: "Start a conversation",
-    slides: [
-      { alt: "Two developers reviewing code together at a laptop", caption: "Shared goals, honest communication" },
-      { alt: "A team working side by side around a shared table", caption: "Partnerships that grow over time" },
-      { alt: "Two partners celebrating with a high five at a meeting", caption: "Trust first, everything follows" },
-      { alt: "A team planning together at a whiteboard", caption: "Building something that lasts" },
-    ],
-  },
-  philosophy: {
-    kicker: "Our philosophy",
-    quote: "Great achievements are rarely built alone. The strongest results come from trusted partnerships where ideas, expertise, and commitment work toward a shared vision.",
-    paras: [
-      "Meaningful success takes patience. The work that matters is rarely finished in a single sprint; it is built steadily, by people who keep showing up for one another.",
-      "Strong partnerships are tested by the hard parts, not the easy ones. When something breaks or the plan changes, a real partner stays in the room and solves it with you.",
-      "Trust is the foundation everything else rests on. Once it is there, decisions move faster, feedback gets honest, and the work gets noticeably better.",
-      "Innovation rarely arrives from one mind in isolation. It grows when knowledge and experience are shared openly and people feel safe to try, question, and refine.",
-      "Long-term thinking compounds. Choices made for the years ahead, rather than the next quarter, tend to create the bigger opportunities later.",
-      "The best results come from rowing in the same direction. When goals are shared and the destination is clear, good teams find a way to reach it.",
-    ],
-  },
-  founders: {
-    kicker: "06 · Founders",
-    title: "The people behind ATS.",
-    sub: "Two founders, one standard: do honest work, build real relationships, and leave every project better than we found it.",
-    people: [
-      {
-        initials: "HT",
-        name: "Daniel (Hiro Tanaka)",
-        role: "Co-Founder & CTO",
-        bio: "Daniel leads engineering and applied AI at ATS Group. He has spent his career at the intersection of solid software and practical AI, architecting systems, mentoring engineers, and keeping delivery honest. He believes good technology is quiet: it works, it lasts, and it gets out of the way.",
-        experience: [
-          "10+ years building and scaling production software",
-          "Full-stack & AI systems across fintech, SaaS and e-commerce",
-          "Leads architecture, code quality and AI automation",
-        ],
-      },
-      {
-        initials: "AI",
-        name: "Akira Iwata",
-        role: "Co-Founder & CEO",
-        bio: "Akira connects the engineering to the business, focusing on partnerships, client relationships, and making sure every project ladders up to a real outcome. The belief behind it is simple: technology only matters when it helps people and businesses move forward.",
-        experience: [
-          "Background in business strategy and operations",
-          "Builds long-term client and partner relationships",
-          "Drives growth, delivery and partnership across markets",
-        ],
-      },
-    ],
-  },
+
   faqHead: {
-    kicker: "07 · FAQ",
-    title: "Questions, answered straight.",
-    sub: "The things partners and clients usually ask before we begin. If yours isn't here, just ask.",
+    kicker: "Questions",
+    title: "The things you are right to ask.",
+    sub: "Including the sceptical ones. If something is missing here, ask it directly.",
   },
+
   contact: {
-    kicker: "08 · Contact",
-    title: "Let's build something that lasts.",
-    sub: "Tell us what you're working on, or book a 30-minute call. No slide deck, just a straight conversation.",
-    formTitle: "Send us a message",
-    formSub: "We reply to every enquiry within one business day.",
-    name: "Name *", namePh: "Your name",
-    email: "Email *", emailPh: "you@company.com",
-    company: "Company", companyPh: "Company (optional)",
-    help: "How can we help?", helpPh: "Select a topic…",
-    services: ["Full-Stack Development", "AI Automation", "CMS Solutions", "CRM Solutions", "Partnership / collaboration", "Something else"],
-    message: "Message *", messagePh: "A few lines about your project, timeline, or goals…",
-    submit: "Send message", submitting: "Sending…",
-    successTitle: "Thank you, message received.",
-    successBody: "We'll be in touch shortly. If it's urgent, feel free to book a call on the right.",
-    sendAnother: "Send another",
-    errorGeneric: "Something went wrong.",
-    fineprint: "By sending this you agree to be contacted about your enquiry. We never share your details.",
-    points: [
-      { label: "Location", value: "Tokyo, Japan" },
-      { label: "Response", value: "Within 1 business day" },
-      { label: "Languages", value: "English / 日本語 / 中文" },
+    kicker: "Apply",
+    title: "Interested? Let's talk.",
+    sub: "Tell us a little about yourself and your network. Every message is read by one of the two founders, and you will get an answer either way.",
+    formTitle: "Apply as a partner",
+    formSub: "Four fields. It does not need to be formal.",
+    name: "Your name",
+    namePh: "Jane Miller",
+    email: "Email",
+    emailPh: "jane@example.com",
+    loc: "Where you are based",
+    locPh: "Austin, TX",
+    network: "Who is in your network?",
+    networkPh: "Select the closest match",
+    networks: [
+      "Startups & tech companies",
+      "Small & mid-size businesses",
+      "Enterprise / corporate",
+      "Agencies & consultancies",
+      "Mixed / other",
     ],
-    bookingTitle: "Prefer to talk? Book a call",
-    bookingSub: "Grab a 30-minute slot directly in our calendar.",
-    fallback: "Trouble with the calendar? ",
+    message: "Tell us about your network",
+    messagePh:
+      "The kind of businesses you have access to, anything you have sold before, and what you would want out of the arrangement.",
+    submit: "Send application",
+    submitting: "Sending…",
+    successTitle: "Thank you — this is with us.",
+    successBody:
+      "We have your application and a confirmation is on its way to your inbox. One of the founders will reply within one business day.",
+    sendAnother: "Send another message",
+    errorGeneric: "We couldn't send your message right now. Please try again, or book a call.",
+    fineprint:
+      "We use your details only to reply to you. No lists, no sharing with anyone else, no automated follow-up sequences.",
+    points: [
+      { label: "Reply time", value: "Within one business day" },
+      { label: "Who reads it", value: "A founder, not an assistant" },
+      { label: "Cost to apply", value: "Nothing, now or later" },
+    ],
+    bookingTitle: "Or book a call directly",
+    bookingSub: "Thirty minutes, no preparation needed. Bring your questions.",
+    fallback: "Widget not loading? ",
     fallbackLink: "Open Calendly in a new tab →",
   },
+
   footer: {
-    blurb: "Software engineering, AI automation & partnership, built in Tokyo.",
-    location: "Tokyo, Japan",
-    schedule: "Schedule a meeting →",
+    blurb:
+      "A Tokyo software and AI studio looking for one US-based partner. We bring the work, you bring the connections, the profit is split on written terms.",
+    location: "Tokyo, Japan · Working with partners worldwide",
+    schedule: "Book a 30-minute call →",
     rights: "All rights reserved.",
-    tagline: "Dependable engineering, from Tokyo.",
+    tagline: "Alliance · Technology · Success",
   },
 };
 
 const ja: Dict = {
-  nav: { skills: "事業内容", why: "選ばれる理由", approach: "私たちの流儀", collaboration: "パートナーシップ", team: "創業者", faq: "よくある質問", contact: "お問い合わせ", company: "会社概要", news: "お知らせ" },
-  news: {
-    kicker: "News", title: "お知らせ", more: "お知らせ一覧",
-    items: [
-      { date: "2026.06.20", cat: "お知らせ", title: "コーポレートサイトをリニューアルしました。" },
-      { date: "2026.05.15", cat: "プロジェクト", title: "Aligner AI プロジェクトを開始しました。" },
-      { date: "2026.04.02", cat: "サービス", title: "AI自動化パートナーシップ・プログラムを開始しました。" },
-      { date: "2026.02.10", cat: "お知らせ", title: "米国・カナダからのパートナーシップのお問い合わせを受付開始しました。" },
+  nav: { offer: "ご提案", how: "進め方", terms: "条件", about: "会社概要", faq: "よくある質問", apply: "応募する" },
+
+  hero: {
+    eyebrow: "ATS Group · 東京",
+    l1: "アメリカの",
+    l2: "パートナーを探しています",
+    lede:
+      "私たちは東京のソフトウェア・AI スタジオです。開発力も、提供できる案件もあります。足りないのは、アメリカ現地で動ける人です。心当たりがあれば、話は単純です。",
+    cta: "パートナーに応募する",
+    secondary: "進め方を見る",
+    imgAlt: "星条旗と街並みを背景に、スーツ姿のトラとハクトウワシが握手している",
+    stats: [
+      { dt: "0円", dd: "パートナー参加に費用は不要" },
+      { dt: "書面", dd: "着手前に条件を明文化" },
+      { dt: "東京", dd: "開発チームが背後に控える" },
     ],
   },
+
+  deal: {
+    kicker: "ご提案",
+    title: "役割分担は、はっきりしています。",
+    sub: "この取り決めは三行で説明できます。このページの残りは、すべてその詳細です。",
+    items: [
+      {
+        role: "私たちが用意するもの",
+        title: "案件。",
+        body:
+          "東京のスタジオが手がける実際の開発・AI 案件です。Web プラットフォーム、業務自動化、AI 連携、CMS・CRM 構築。要件定義から見積り、開発、保守まで私たちが担当します。存在しないものを売っていただくことはありません。",
+        alt: "金の肉球ピンバッジを着けたスーツ姿のトラのクローズアップ",
+      },
+      {
+        role: "あなたが持ち込むもの",
+        title: "現地のつながり。",
+        body:
+          "この種の仕事を必要とする米国企業をご存じで、最初の会話を始められる方。紹介、面談、そして現地にいる人だけが持つ信用です。技術的な知識は必要ありません。",
+        alt: "星条旗のピンバッジを着けたスーツ姿のハクトウワシのクローズアップ",
+      },
+      {
+        role: "ふたりで",
+        title: "利益を分け合う。",
+        body:
+          "成約した案件の利益から、合意した割合をお渡しします。その割合は着手前に書面化し、後から変更することはありません。遡っての減額も、条件の後出しもありません。",
+        alt: "トラの前足と人の手がしっかりと握手している様子",
+      },
+    ],
+  },
+
+  who: {
+    kicker: "こんな方へ",
+    title: "数より、ひとりの適任者を。",
+    sub: "名簿を作りたいのではなく、一人か二人の方ときちんと組みたいと考えています。相性については、お互い率直であるべきです。",
+    imgAlt: "ビジネススーツのワシたちに囲まれた、スーツ姿のトラ",
+    forTitle: "こんな方に向いています",
+    forItems: [
+      "米国在住で、実際に機能する人脈をお持ちの方。",
+      "サービスを販売した経験がある、あるいは単純に適切な人を多くご存じの方。",
+      "最初の面談を設定し、提案を平易な言葉で説明できる方。",
+      "一度きりの紹介ではなく、継続的な関係に関心がある方。",
+      "条件を書面にし、署名することに抵抗がない方。",
+    ],
+    notTitle: "こんな方には向きません",
+    notItems: [
+      "固定給の職をお探しの方 — これは成果から支払われるパートナーシップです。",
+      "成約前の支払いが必要な方。",
+      "取り決めを口約束のままにしておきたい方。",
+      "収入の保証を期待される方。それを正直に約束できる人はいません。",
+    ],
+  },
+
+  how: {
+    kicker: "進め方",
+    title: "4 ステップ。想定外はありません。",
+    sub: "最初のご連絡から初回のお支払いまで、全体の流れです。",
+    steps: [
+      {
+        no: "01",
+        title: "自己紹介をお送りください",
+        body:
+          "短い文章で構いません。拠点、接点のある企業の種類、これまでのご経験。相性が良さそうであれば 30 分のオンライン面談を設定します。資料は不要です。",
+      },
+      {
+        no: "02",
+        title: "条件を書面で合意する",
+        body:
+          "利益の配分、担当範囲、双方の解約方法を 1 通の短い書面にまとめます。お読みいただき、変更したい点を反映し、双方で署名します。それ以前に作業は始めません。",
+      },
+      {
+        no: "03",
+        title: "ご紹介いただく",
+        body:
+          "あなたが扉を開け、その場に残ります。要件定義、見積り、開発、保守は私たちが担当します。あなたの紹介先に関わるやり取りはすべて共有するので、ご自身の名前で何が語られているかを常に把握できます。",
+      },
+      {
+        no: "04",
+        title: "利益を分け合う",
+        body:
+          "クライアントからの入金と納品を経て、合意した取り分を決まったスケジュールでお支払いします。合計額だけでなく、計算の根拠となった数字もご覧いただけます。",
+      },
+    ],
+  },
+
+  terms: {
+    kicker: "透明性",
+    title: "簡潔な契約。完全な透明性。",
+    sub: "この 4 つの問いに答えられないパートナー募集は、受けるに値しません。ですので、先にこちらから答えます。",
+    imgAlt: "自由の女神像を背景に、肩を組んで親指を立てるスーツ姿のトラとワシ",
+    rows: [
+      {
+        title: "前払いは一切ありません",
+        body:
+          "パートナーになるために私たちへお支払いいただくものは何もありません。参加費、スターターキット、研修パッケージ、ソフトウェアのライセンス料、いずれも存在しません。報酬より先にお金が動くなら、それは逆方向です。",
+      },
+      {
+        title: "まず書面で",
+        body:
+          "配分、担当範囲、支払スケジュール、解約条件は 1 通の短い書面にまとめ、署名前にお読みいただき修正できます。口約束はしません。",
+      },
+      {
+        title: "数字を開示します",
+        body:
+          "クライアントへの請求額と、その案件で実際に出た利益をご覧いただけます。あなたの取り分は、こちらが提示する数字ではなく、確認できる数字から計算されます。",
+      },
+      {
+        title: "いつでも終了できます",
+        body:
+          "どちらからでも、事前通知のうえ終了できます。すでに成約した分は約束どおりお支払いします。あなたも私たちも、何かに縛られることはありません。",
+      },
+    ],
+    note:
+      "私たちは東京のソフトウェア会社であり、勧誘のしくみではありません。何かを購入すること、誰かを勧誘すること、私たちに代わって資金を動かすことは一切求めません。こうした募集でそれらを求められたら、その話からは離れてください。",
+  },
+
+  about: {
+    kicker: "組む相手について",
+    title: "ATS Group（東京）",
+    imgAlt: "光る地球儀を置いたデスクに座る、スリーピーススーツ姿のトラ",
+    paras: [
+      "東京にある、少数精鋭のエンジニアリングスタジオです。企業向けの実運用ソフトウェアと応用 AI を開発しています。デモではなく、月曜の朝も動き続けなければならない、地味な種類の仕事です。",
+      "仕事の質もチームも確かです。足りないのは到達力です。東京のオフィスから米国企業との信頼関係を築くには時間がかかり、クライアントがすでに知っている人からの紹介は、どれだけの営業メールよりも価値があります。",
+      "このページが存在する理由はそれだけです。エンジニアは足りています。足りていないのは、適切な扉を開けられるアメリカの方です。",
+    ],
+    triad: [
+      { letter: "A", word: "Alliance（提携）", body: "業者ではなくパートナーとして。目標もリスクも成果も分かち合います。" },
+      { letter: "T", word: "Technology（技術）", body: "実際の事業課題を解くフルスタック開発と応用 AI。" },
+      { letter: "S", word: "Success（成功）", body: "クライアントが得て、手元に残した額で測ります。あなたの報酬の原資です。" },
+    ],
+    buildTitle: "実際に手がけているもの",
+    builds: [
+      "フルスタック Web プラットフォームと API",
+      "AI 自動化、LLM エージェント、RAG システム",
+      "マーケティングチーム向け CMS 構築",
+      "CRM と社内業務ツール",
+      "クラウドインフラと DevOps",
+      "継続的な保守・運用サポート",
+    ],
+  },
+
   company: {
-    kicker: "Company", title: "会社概要",
+    kicker: "会社概要",
+    title: "会社概要",
     rows: [
       { label: "会社名", value: "ATS Group" },
       { label: "設立", value: "2024年" },
       { label: "所在地", value: "日本・東京" },
-      { label: "代表者", value: "Daniel (Hiro Tanaka)、Akira Iwata" },
-      { label: "事業内容", value: "フルスタック開発、AI自動化、CMS・CRM、AI研修" },
+      { label: "代表者", value: "Daniel（田中 大） / 岩田 明" },
+      { label: "事業内容", value: "フルスタック開発、AI 自動化、CMS・CRM ソリューション" },
       { label: "対応言語", value: "English / 日本語 / 中文" },
     ],
   },
-  hero: {
-    eyebrow: "東京, 日本",
-    l1: "ソフトウェアと、", l2: "それを動かす", l3a: "", em: "チーム", l3b: "をつくる。",
-    lede:
-      "ATS Group は東京を拠点とするエンジニアリングスタジオです。本番品質のフルスタック開発、AI自動化、そしてアイデアを形にする実践的な研修とパートナーシップを提供します。",
-    cta: "お問い合わせ", secondary: "私たちのスキル",
-    stats: [
-      { dt: "10年以上", dd: "シニアによる開発実績" },
-      { dt: "フルスタック", dd: "Web・クラウド・AI・自動化" },
-      { dt: "世界中へ", dd: "リモート対応のパートナーシップ" },
-    ],
-  },
-  trust: {
-    label: "対応領域",
-    items: ["フィンテック", "SaaS", "EC", "ヘルスケア", "製造業", "EdTech"],
-  },
-  meaning: {
-    kicker: "社名の意味",
-    title: "ATS が表す、3つの約束。",
-    sub: "Alliance（提携）、Technology（技術）、Success（成功）。長期的なパートナーシップを築き、確かな技術で支え、お客様の収益への貢献で自らを評価します。",
-    items: [
-      { num: "A", word: "Alliance", body: "ベンダーではなくパートナーとして。目標もリスクも成果も共有し、長期的に共に成長します。" },
-      { num: "T", word: "Technology", body: "現実のビジネス課題を解決するソフトウェアとAI。コストを削減し、新たな収益源を開き、うまくいっている仕組みをスケールさせます。" },
-      { num: "S", word: "Success", body: "成果で測る、共有の成功。顧客が増え、売上が伸び、利益が上がる。お客様の成長が、私たちの成長です。" },
-    ],
-    triadsLabel: "3つの文字、3つの約束。",
-    triads: [
-      { theme: "組み方", words: ["Align", "Trust", "Share"] },
-      { theme: "つくり方", words: ["Automate", "Transform", "Scale"] },
-      { theme: "得られる成果", words: ["Advantage", "Traction", "Sustainable profit"] },
-    ],
-  },
-  partner: {
-    kicker: "パートナーシップの進め方",
-    title: "Align. Trust. Share.",
-    sub: "3つのステップで進めるパートナーシップ。どちらか一方では得られない収益を、共に生み出すための仕組みです。",
-    steps: [
-      { letter: "A", word: "Align", body: "まずお客様のビジネス目標と収益目標を理解し、スコープ・役割・成功の定義を、コードを書く前に合意します。" },
-      { letter: "T", word: "Trust", body: "透明な進捗、誠実なコミュニケーション、そして約束を果たすシニアエンジニア。スプリントごとに信頼を積み重ねます。" },
-      { letter: "S", word: "Share", body: "リスクも成果も共有します。プロダクトが収益を生むほど共に成長する、長期的なインセンティブで結果にコミットします。" },
-    ],
-    motto: "目標をそろえ、信頼を築き、利益を分かち合う。",
-  },
-  skills: {
-    kicker: "01 · スキル",
-    title: "得意なことを、確実に。",
-    sub: "4つのコア領域を、ひとつのシニアチームで。すべてはビジネスの成長のために。",
-    items: [
-      {
-        num: "01", title: "フルスタック開発",
-        body: "エンドツーエンドのプロダクト開発。明快なAPI、考え抜かれたフロントエンド、長く耐えるインフラ。まっさらなリポジトリから、チームが運用できるシステムまで。一年後も理解できるコードを書きます。",
-        tags: ["Webアプリ", "API", "クラウド", "DevOps"],
-        alt: "暗いワークスペースのノートPCに開いたコードエディタ",
-      },
-      {
-        num: "02", title: "AI自動化",
-        body: "サポート、データ入力、レポート作成、振り分けなど、静かに時間を奪う業務をAIに任せます。評価され、観測でき、本番でも安全に動くRAGパイプライン・エージェント・連携を構築します。",
-        tags: ["LLMエージェント", "RAG", "ワークフロー", "連携"],
-        alt: "つながる線の上に浮かぶ立体的なAIの文字",
-      },
-      {
-        num: "03", title: "CMS（コンテンツ管理）",
-        body: "マーケティングチームが使っていて気持ちよいコンテンツ基盤。ヘッドレスでも従来型でも、速くSEOに強く、技術者でなくても安心して公開できる仕組みを。開発者を待つ必要はありません。",
-        tags: ["ヘッドレス", "WordPress", "Sanity", "SEO"],
-        alt: "Webサイトとコードを映すモニターが並ぶ夜のデスク",
-      },
-      {
-        num: "04", title: "CRM（顧客管理）",
-        body: "実際の営業・サポートの流れに合わせた顧客管理を。明快なパイプライン、役立つ自動化、そして営業・運用・データを同期させる連携を構築します。",
-        tags: ["営業パイプライン", "自動化", "連携", "ダッシュボード"],
-        alt: "ビジネス分析ダッシュボードを表示したノートPC",
-      },
-    ],
-  },
-  experience: {
-    kicker: "実績",
-    title: "積み重ねた経験を、土台に。",
-    sub: "進行中の本物の仕事を、誠実な献身と全力の努力でお届けしています。",
-    handleAll: "最初のアイデアからローンチ、その後の運用まで。技術全体を私たちが引き受けるので、複数のベンダーを取りまとめる必要はありません。",
-    items: [
-      { name: "Outlier", note: "AI研修・モデル評価（進行中）" },
-      { name: "Mercor", note: "AI人材・データ案件（進行中）" },
-      { name: "Aligner", note: "AIアライメント・データ品質（進行中）" },
-      { name: "フルスタックアプリ 3件", note: "開発進行中のWebプラットフォーム" },
-    ],
-  },
-  results: {
-    kicker: "実証",
-    title: "アイデアから、実際の収益へ。",
-    sub: "ひとつのアイデアに協働を掛け合わせると、何が生まれるか。",
-    intro: [
-      "言葉だけではありません。下のグラフは、協働するパートナー一人あたりの平均収益の推移です。出発点は、ひとつのアイデアと、私たちのエンジニアリング、そしてやり遂げるという共有された覚悟だけでした。",
-      "最初の2か月は準備期間です。リサーチ、構築、土台づくりに充て、意図的に収益はありません。3か月目から実際の収入が生まれ、パートナー一人あたり4,000ドルを超えます。10か月目には13,000ドル超まで成長します。",
-      "パートナーに技術的な知識は不要でした。成果は、アイデアそのものと、本物の協働の精神、そしてその周りに私たちが築いた技術から生まれました。",
-    ],
-    prep: "準備期間",
-    ramp: "収益創出",
-    axisX: "月",
-    axisY: "パートナーあたり収益（USD）",
-    note: "数値は協働するパートナー一人あたりです。",
-    stats: [
-      { value: "2か月", label: "準備期間" },
-      { value: "$4K+", label: "3か月目で" },
-      { value: "$13K+", label: "10か月目で" },
-    ],
-  },
-  why: {
-    kicker: "02 · 選ばれる理由",
-    title: "なぜ ATS Group と組むのか。",
-    sub: "依頼して終わりのベンダーではありません。あなたと同じ目線でビジネスを考える、技術のパートナーです。",
-    blocks: [
-      {
-        q: "ATS Group の違いは？",
-        a: "私たちはツールありきではなく、あなたのビジネスから始めます。そこにシニアのエンジニアリングと実践的なAIの経験を持ち込み、共に成長できるものを築きます。",
-        points: ["ビジネス起点の思考", "長期的なパートナーシップ", "AI・自動化の専門性", "モダンな技術スタック", "透明なコミュニケーション", "拡張性と将来の成長"],
-      },
-      {
-        q: "なぜ信頼できるのか？",
-        a: "信頼は、納品の仕方で築かれます。予測可能で、品質が目に見え、ローンチ後も消えないサポートを。",
-        points: ["品質への責任", "信頼できる開発プロセス", "測定可能な成果への注力", "技術的な卓越性", "長期的なサポート"],
-      },
-      {
-        q: "どんなパートナーを求めているか？",
-        a: "週単位ではなく、年単位で考える方々と最も良い仕事ができます。取引より関係を大切にするなら、ぜひお話ししましょう。",
-        points: ["ビジネス協業", "戦略的提携", "技術提携", "スタートアップとの協業", "エンタープライズ案件", "長期的な顧客関係"],
-      },
-      {
-        q: "どう協働するのか？",
-        a: "まず聴き、成功の定義を合意し、最後まで状況を共有します。説明責任は双方向です。",
-        points: ["まずビジネス目標の理解", "透明なコミュニケーション", "共有するビジョンと責任", "継続的な改善", "相互の成長と成功"],
-      },
-      {
-        q: "何を大切にしているか？",
-        a: "見られていてもいなくても、同じ原則がすべての判断を導きます。",
-        points: ["信頼", "誠実さ", "革新", "説明責任", "長期的な視点", "学び続ける姿勢"],
-      },
-    ],
-  },
-  approach: {
-    kicker: "03 · 私たちの流儀",
-    title: "ノイズより、技を。",
-    sub_a: "私たちは", sub_em: "着実で意図的な改善", sub_b: "を信じ、それをソフトウェアづくりに適用します。小さく、こまめに届ける。自分たちで運用したくないものは、世に出しません。",
-    steps: [
-      { no: "I", title: "まず、聴く", body: "好きなフレームワークではなく、お客様の制約と顧客から始めます。正しい道具とは、チームが無理なく使えるものです。" },
-      { no: "II", title: "オープンに作る", body: "短いサイクル、見える進捗、早い段階で動くソフトウェア。意思決定はその場で共有され、ブラックボックスにはなりません。" },
-      { no: "III", title: "より良くして去る", body: "文書化・テスト済みのシステムと、それを運用する知識をお渡しします。私たちの目標は、自分たちを不要にすることです。" },
-    ],
-  },
-  stack: {
-    kicker: "04 · 技術スタック",
-    title: "私たちが選ぶ道具。",
-    sub: "実用的で、実績があり、プロジェクトごとに選定します。流行で選ぶことはありません。",
-    columns: [
-      { title: "フロントエンド", items: ["React", "Next.js", "TypeScript", "Vue", "Tailwind"] },
-      { title: "バックエンド", items: ["Node.js", "Go", "Python", "PostgreSQL", "GraphQL"] },
-      { title: "AI / 自動化", items: ["Claude & OpenAI", "LangChain", "n8n / Zapier", "ベクトルDB", "RAG"] },
-      { title: "クラウド・運用", items: ["AWS", "GCP", "Docker", "Kubernetes", "Terraform"] },
-    ],
-  },
-  collab: {
-    kicker: "05 · パートナーシップ",
-    title: "共に築き、長く続く。",
-    lead: "私たちの専門性を活かし、あなたのビジョンを形にするお手伝いができることを、心から楽しみにしています。",
-    paras: [
-      "私たちが誇れる成果は、いつも同じ場所から始まりました。互いを信頼し、明確な目標を分かち合う人たちです。プロジェクトには必ず難しい局面があります。それを乗り越えるのは、絶え間ない対話、プロ意識、そして互いの成功への真の献身です。",
-      "私たちにとって協働とは、ただ隣で働くこと以上のものです。強みを掛け合わせ、率直に意見を交わし、一人では届かない扉を開くこと。良いものは、地道な努力と、周囲を支えようとする誠実な姿勢から生まれます。",
-      "私たちが最も大切にするパートナーシップは、目先の利益のためのものではありません。信頼、相互の敬意、そして共有された長期的な目標の上に、時間をかけて育っていきます。同じビジョンに向かうとき、成果はプロジェクトそのものよりも長く残ります。",
-      "いま私たちは、本物の成長志向のパートナーシップを大切にする方々、特に米国とカナダの専門家・起業家・ビジネスに前向きな方々とのつながりを求めています。事業拡大、新しい技術、あるいは新たな機会づくり。何を目指す場合でも、一緒に何が築けるかをぜひ探らせてください。",
-    ],
-    noTech: "そして、私たちと組むのに技術的な知識は必要ありません。エンジニアリングとAIの知見は私たちが持ち込みます。お願いしたいのは、率直さ、信頼、そして本物の協働の精神だけ。それこそが、何よりもパートナーシップを成り立たせるものです。",
-    revenue: "技術的なバックグラウンドがなくても、私たちと共に収益を生み出せます。紹介やレベニューシェアのパートナーシップを通じて、あなたの人脈・市場知識・関係性が実際の収入につながります。技術的な実装は、すべて私たちが裏側で引き受けます。",
-    meetingNote: "つまり、その分野の専門知識がなくても、協働を通じて確かな成果と実際の収益が生まれます。仕組みの詳細は、短い打ち合わせで丁寧にご説明します。",
-    closing: "共に、アイデアを機会へ。そして機会を、長く続くものへと変えていきましょう。",
-    cta: "まずは話してみる",
-    slides: [
-      { alt: "ノートPCで一緒にコードを確認する開発者2人", caption: "共有する目標と、率直な対話" },
-      { alt: "ひとつのテーブルを囲んで協働するチーム", caption: "時間をかけて育つパートナーシップ" },
-      { alt: "ミーティングでハイタッチを交わすパートナー", caption: "まず信頼から、すべてが続く" },
-      { alt: "ホワイトボードの前で計画を立てるチーム", caption: "長く続くものを築く" },
-    ],
-  },
-  philosophy: {
-    kicker: "私たちの哲学",
-    quote: "大きな達成が、一人で成し遂げられることはめったにありません。最も強い成果は、アイデアと専門性と覚悟が同じビジョンに向かう、信頼に基づくパートナーシップから生まれます。",
-    paras: [
-      "意味のある成功には、忍耐が要ります。本当に大切な仕事は一度の短距離走で終わることは少なく、互いのために通い続ける人たちによって、着実に築かれます。",
-      "強いパートナーシップは、順調なときではなく難所で試されます。何かが壊れ、計画が変わったとき、真のパートナーはその場に残り、共に解決します。",
-      "信頼は、すべてが乗るための土台です。それがあれば、判断は速くなり、フィードバックは率直になり、仕事は目に見えて良くなります。",
-      "革新が、孤立した一つの頭から生まれることはめったにありません。知識と経験がオープンに共有され、試し、問い、磨くことが安全だと感じられるときに育ちます。",
-      "長期的な思考は、積み重なります。次の四半期ではなく、その先の数年のために下す選択が、後により大きな機会を生みます。",
-      "最良の成果は、同じ方向に漕ぐことから生まれます。目標が共有され、行き先が明確なとき、良いチームは必ず到達する道を見つけます。",
-    ],
-  },
-  founders: {
-    kicker: "06 · 創業者",
-    title: "ATS を支える人たち。",
-    sub: "二人の創業者、ひとつの基準。誠実に働き、本物の関係を築き、すべてのプロジェクトを出会ったときより良くして去る。",
-    people: [
-      {
-        initials: "HT",
-        name: "Daniel (Hiro Tanaka)",
-        role: "共同創業者 & CTO",
-        bio: "Daniel は ATS Group のエンジニアリングと実用AIを統括します。堅実なソフトウェアと実践的なAIの交点でキャリアを重ね、システムを設計し、エンジニアを育て、誠実な開発を貫いてきました。良い技術は静かであるべきだ。動き、長持ちし、邪魔をしない。それが彼の信条です。",
-        experience: [
-          "本番ソフトウェアの構築・拡張に10年以上",
-          "フィンテック・SaaS・ECでのフルスタック/AI開発",
-          "アーキテクチャ・コード品質・AI自動化を統括",
-        ],
-      },
-      {
-        initials: "AI",
-        name: "Akira Iwata",
-        role: "共同創業者 & CEO",
-        bio: "Akira はエンジニアリングとビジネスをつなぎます。パートナーシップと顧客との関係に注力し、すべてのプロジェクトが確かな成果に結びつくよう導きます。技術は人とビジネスを前進させてこそ意味がある。それが Akira の信条です。",
-        experience: [
-          "事業戦略とオペレーションの経験",
-          "長期的な顧客・パートナー関係の構築",
-          "市場をまたぐ成長・デリバリー・提携を推進",
-        ],
-      },
-    ],
-  },
+
   faqHead: {
-    kicker: "07 · よくある質問",
-    title: "率直にお答えします。",
-    sub: "始める前に、パートナーやお客様からよくいただく質問です。見当たらないものは、お気軽にお尋ねください。",
+    kicker: "ご質問",
+    title: "当然、聞いておきたいこと。",
+    sub: "疑わしく思われる点も含めて。ここにない疑問は、直接お尋ねください。",
   },
+
   contact: {
-    kicker: "08 · お問い合わせ",
-    title: "長く残るものを、一緒に。",
-    sub: "取り組んでいることをお聞かせください。あるいは30分の通話をご予約を。資料は不要、率直にお話ししましょう。",
-    formTitle: "メッセージを送る",
-    formSub: "いただいたお問い合わせには、1営業日以内に返信します。",
-    name: "お名前 *", namePh: "お名前",
-    email: "メール *", emailPh: "you@company.com",
-    company: "会社名", companyPh: "会社名（任意）",
-    help: "ご相談内容", helpPh: "トピックを選択…",
-    services: ["フルスタック開発", "AI自動化", "CMS（コンテンツ管理）", "CRM（顧客管理）", "パートナーシップ・協業", "その他"],
-    message: "メッセージ *", messagePh: "プロジェクト、スケジュール、目標などを数行でお書きください…",
-    submit: "送信する", submitting: "送信中…",
-    successTitle: "ありがとうございます。受け付けました。",
-    successBody: "まもなくご連絡します。お急ぎの場合は、右側から通話のご予約もどうぞ。",
-    sendAnother: "もう一度送る",
-    errorGeneric: "問題が発生しました。",
-    fineprint: "送信することで、お問い合わせに関するご連絡に同意したものとみなします。お客様の情報を共有することはありません。",
-    points: [
-      { label: "所在地", value: "東京, 日本" },
-      { label: "返信", value: "1営業日以内" },
-      { label: "対応言語", value: "English / 日本語 / 中文" },
+    kicker: "応募",
+    title: "ご興味があれば、お話ししましょう。",
+    sub: "ご自身と人脈について少しお聞かせください。すべてのメッセージは創業者 2 名のいずれかが読み、可否にかかわらずお返事します。",
+    formTitle: "パートナーに応募する",
+    formSub: "4 項目だけです。かしこまった文章でなくて構いません。",
+    name: "お名前",
+    namePh: "山田 太郎",
+    email: "メールアドレス",
+    emailPh: "taro@example.com",
+    loc: "拠点",
+    locPh: "テキサス州オースティン",
+    network: "どのような人脈をお持ちですか",
+    networkPh: "最も近いものをお選びください",
+    networks: [
+      "スタートアップ・テック企業",
+      "中小企業",
+      "大企業・法人",
+      "代理店・コンサルティング会社",
+      "混在・その他",
     ],
-    bookingTitle: "話して決めたい方は、通話予約を",
-    bookingSub: "カレンダーから30分の枠を直接ご予約いただけます。",
-    fallback: "カレンダーが表示されませんか？ ",
+    message: "人脈についてお聞かせください",
+    messagePh: "接点のある企業の種類、販売のご経験、この取り決めに期待されることなど。",
+    submit: "応募を送信",
+    submitting: "送信中…",
+    successTitle: "ありがとうございます。受け取りました。",
+    successBody:
+      "応募を受け付けました。確認メールをお送りしています。1 営業日以内に創業者のいずれかよりご返信します。",
+    sendAnother: "別のメッセージを送る",
+    errorGeneric: "ただいま送信できませんでした。再度お試しいただくか、面談をご予約ください。",
+    fineprint:
+      "いただいた情報はご返信のためだけに使用します。リスト化、第三者への提供、自動配信は一切行いません。",
+    points: [
+      { label: "返信まで", value: "1 営業日以内" },
+      { label: "読むのは", value: "担当者ではなく創業者本人" },
+      { label: "応募費用", value: "今も今後も無料" },
+    ],
+    bookingTitle: "直接ご予約もできます",
+    bookingSub: "30 分、準備は不要です。ご質問をお持ちください。",
+    fallback: "表示されない場合は ",
     fallbackLink: "Calendly を新しいタブで開く →",
   },
+
   footer: {
-    blurb: "ソフトウェア開発・AI自動化・パートナーシップを、東京から。",
-    location: "東京, 日本",
-    schedule: "ミーティングを予約 →",
+    blurb:
+      "米国のパートナーを 1 名探している、東京のソフトウェア・AI スタジオです。案件は私たちが、つながりはあなたが。利益は書面の条件に従って分け合います。",
+    location: "東京 · 世界中のパートナーと",
+    schedule: "30 分の面談を予約する →",
     rights: "All rights reserved.",
-    tagline: "確かなものづくりを、東京から。",
+    tagline: "Alliance · Technology · Success",
   },
 };
 
 const zh: Dict = {
-  nav: { skills: "业务", why: "为何选择", approach: "我们的方式", collaboration: "合作伙伴", team: "创始人", faq: "常见问题", contact: "联系我们", company: "公司概要", news: "新闻" },
-  news: {
-    kicker: "News", title: "最新动态", more: "查看全部",
-    items: [
-      { date: "2026.06.20", cat: "公告", title: "企业官网全新改版上线。" },
-      { date: "2026.05.15", cat: "项目", title: "Aligner AI 项目正式启动。" },
-      { date: "2026.04.02", cat: "服务", title: "AI 自动化合作伙伴计划上线。" },
-      { date: "2026.02.10", cat: "公告", title: "开始受理来自美国与加拿大的合作咨询。" },
+  nav: { offer: "合作提案", how: "合作流程", terms: "条款", about: "关于我们", faq: "常见问题", apply: "申请" },
+
+  hero: {
+    eyebrow: "ATS Group · 日本东京",
+    l1: "寻找一位",
+    l2: "美国合作伙伴",
+    lede:
+      "我们是一家位于东京的软件与 AI 工作室。我们有开发能力，也有可以承接的项目，唯独缺少一位在美国本地的伙伴。如果这说的是您，事情其实很简单。",
+    cta: "申请成为合作伙伴",
+    secondary: "了解合作流程",
+    imgAlt: "身着西装的老虎与白头鹰在美国国旗和城市天际线前握手",
+    stats: [
+      { dt: "0 元", dd: "成为合作伙伴无需任何费用" },
+      { dt: "书面", dd: "开始前先写清条款" },
+      { dt: "东京", dd: "工程团队作为后盾" },
     ],
   },
+
+  deal: {
+    kicker: "合作提案",
+    title: "分工非常清楚。",
+    sub: "整个合作用三句话就能说完，本页其余内容都只是细节。",
+    items: [
+      {
+        role: "我们提供",
+        title: "项目机会。",
+        body:
+          "来自东京工作室的真实开发与 AI 项目：Web 平台、流程自动化、AI 集成、CMS 与 CRM 建设。需求梳理、报价、开发与维护都由我们负责。您绝不需要去推销尚不存在的东西。",
+        alt: "佩戴金色爪印徽章、身着西装的老虎特写",
+      },
+      {
+        role: "您提供",
+        title: "本地人脉。",
+        body:
+          "您认识需要这类服务的美国企业，并且能促成第一次对话。介绍、会面，以及只有身在本地才具备的信任感。不需要任何技术背景。",
+        alt: "佩戴美国国旗徽章、身着西装的白头鹰特写",
+      },
+      {
+        role: "我们共同",
+        title: "分享利润。",
+        body:
+          "项目成交后，您将按约定比例分得利润。该比例在开始前以书面确定，之后不会更改。不会事后追扣，也不会临时调整标准。",
+        alt: "虎爪与人手紧紧相握",
+      },
+    ],
+  },
+
+  who: {
+    kicker: "适合谁",
+    title: "我们要的是合适的人，不是最多的人。",
+    sub: "我们希望认真地与一两位伙伴合作，而不是攒一份名单。合适与否，双方都该坦诚。",
+    imgAlt: "身着西装的老虎被一群商务装扮的鹰围绕",
+    forTitle: "以下情况比较合适",
+    forItems: [
+      "您在美国生活和工作，并拥有真实有效的职业人脉。",
+      "您有销售服务的经验，或者单纯认识很多对的人。",
+      "您能安排第一次会面，并用平实的语言讲清楚这个提案。",
+      "您想要的是持续的合作关系，而不是一次性的介绍。",
+      "您愿意把条款写下来并签字。",
+    ],
+    notTitle: "以下情况并不适合",
+    notItems: [
+      "您在找一份有固定薪水的工作 —— 这是按成果付酬的合作关系。",
+      "您需要在任何项目成交之前就拿到报酬。",
+      "您更希望双方只是口头约定、不留文件。",
+      "您期待收入保证。没有人能诚实地给出这种承诺。",
+    ],
+  },
+
+  how: {
+    kicker: "合作流程",
+    title: "四个步骤，没有意外。",
+    sub: "从第一条消息到第一笔分成，这就是全部流程。",
+    steps: [
+      {
+        no: "01",
+        title: "先做个自我介绍",
+        body:
+          "一段简短的说明即可：您所在的地区、能接触到的企业类型、以及过往经历。如果看起来合适，我们会安排 30 分钟的线上沟通。不需要准备材料。",
+      },
+      {
+        no: "02",
+        title: "以书面形式确定条款",
+        body:
+          "我们会把利润分成、各自的职责、以及任一方如何退出写进一份简短的文件。您阅读、提出修改，双方签署。在此之前不会开始任何工作。",
+      },
+      {
+        no: "03",
+        title: "进行引荐",
+        body:
+          "您打开大门并留在沟通之中。需求梳理、报价、交付与维护由我们负责。凡是涉及您人脉的往来都会同步给您，您始终清楚以您的名义说了什么。",
+      },
+      {
+        no: "04",
+        title: "分享利润",
+        body:
+          "客户付款、项目交付之后，按固定周期支付您约定的分成。您看到的不只是总额，还有计算所依据的数字。",
+      },
+    ],
+  },
+
+  terms: {
+    kicker: "透明度",
+    title: "简单的协议，完全的透明。",
+    sub: "一个回答不了这四个问题的合作邀约，不值得接受。所以我们先把答案放在这里。",
+    imgAlt: "身着西装的老虎与鹰搭肩竖起大拇指，背景是自由女神像",
+    rows: [
+      {
+        title: "永远没有预付费用",
+        body:
+          "成为合作伙伴，您无需向我们支付任何费用。没有加盟费、没有启动礼包、没有培训套餐、没有软件授权费。如果在您赚到钱之前就要先付钱，那方向就反了。",
+      },
+      {
+        title: "一切先落到纸面",
+        body:
+          "分成比例、职责范围、付款周期与退出条款都写在一份简短的文件里，签署前您可以阅读并修改。不做口头约定。",
+      },
+      {
+        title: "数字公开",
+        body:
+          "您可以看到客户被开具的金额，以及该项目实际产生的利润。您的分成依据的是可核对的数字，而不是我们单方面给出的数额。",
+      },
+      {
+        title: "随时可以退出",
+        body:
+          "任何一方都可以提前通知后结束合作。已经成交的部分照常支付。您不会被绑住，我们也一样。",
+      },
+    ],
+    note:
+      "我们是一家位于东京的软件公司，不是招募式的生意。我们不会要求您购买任何东西、发展任何下线，或代我们转移资金。如果有类似的邀约向您提出这些要求，请立即远离。",
+  },
+
+  about: {
+    kicker: "您将与谁合作",
+    title: "ATS Group，东京。",
+    imgAlt: "身着三件套西装的老虎坐在办公桌前，桌上有发光的地球仪",
+    paras: [
+      "我们是东京一家精干的工程工作室，为企业开发生产级软件与应用型 AI —— 是那种必须在周一早晨继续运转的、不起眼的工作，而不是演示。",
+      "工作质量和团队都没有问题，我们欠缺的是触达能力。从东京的办公室与美国企业建立信任非常缓慢，而来自客户已经认识的人的引荐，胜过任何数量的陌生开发邮件。",
+      "这就是这个页面存在的全部原因。我们不缺工程师，缺的是一位能敲开正确大门的美国伙伴。",
+    ],
+    triad: [
+      { letter: "A", word: "Alliance（联盟）", body: "以伙伴而非供应商的身份合作。共享目标、共担风险、共享收益。" },
+      { letter: "T", word: "Technology（技术）", body: "解决真实业务问题的全栈工程与应用型 AI。" },
+      { letter: "S", word: "Success（成功）", body: "以客户赚到并留下的收益衡量，那也是您分成的来源。" },
+    ],
+    buildTitle: "我们实际做的事",
+    builds: [
+      "全栈 Web 平台与 API",
+      "AI 自动化、LLM 智能体与 RAG 系统",
+      "面向市场团队的 CMS 建设",
+      "CRM 与企业内部工具",
+      "云基础设施与 DevOps",
+      "持续的维护与技术支持",
+    ],
+  },
+
   company: {
-    kicker: "Company", title: "公司概要",
+    kicker: "公司概要",
+    title: "公司概要",
     rows: [
       { label: "公司名称", value: "ATS Group" },
-      { label: "成立", value: "2024年" },
-      { label: "所在地", value: "日本·东京" },
-      { label: "代表人", value: "Daniel (Hiro Tanaka)、Akira Iwata" },
-      { label: "业务内容", value: "全栈开发、AI 自动化、CMS·CRM、AI 培训" },
-      { label: "语言", value: "English / 日本語 / 中文" },
+      { label: "成立时间", value: "2024 年" },
+      { label: "所在地", value: "日本东京" },
+      { label: "代表人", value: "Daniel（田中大）、岩田明" },
+      { label: "业务范围", value: "全栈开发、AI 自动化、CMS 与 CRM 解决方案" },
+      { label: "工作语言", value: "English / 日本語 / 中文" },
     ],
   },
-  hero: {
-    eyebrow: "日本 · 东京",
-    l1: "我们打造软件，", l2: "也打造", l3a: "", em: "团队", l3b: "去交付它。",
-    lede:
-      "ATS Group 是一家位于东京的工程工作室。我们提供生产级的全栈开发、AI 自动化，以及把想法变为现实的实战培训与合作。",
-    cta: "联系我们", secondary: "我们的技能",
-    stats: [
-      { dt: "10年+", dd: "资深交付经验" },
-      { dt: "全栈", dd: "Web、云、AI、自动化" },
-      { dt: "面向全球", dd: "远程友好的合作" },
-    ],
-  },
-  trust: {
-    label: "服务领域",
-    items: ["金融科技", "SaaS", "电商", "医疗健康", "制造业", "教育科技"],
-  },
-  meaning: {
-    kicker: "名字的含义",
-    title: "ATS 背后的三个承诺。",
-    sub: "Alliance（联盟）、Technology（技术）、Success（成功）。我们建立长期合作，以扎实的工程能力为支撑，并以帮助你创造的收益来衡量自己。",
-    items: [
-      { num: "A", word: "Alliance", body: "我们是你的伙伴，而非供应商。共享目标、风险与成果，长期共同成长。" },
-      { num: "T", word: "Technology", body: "解决真实业务问题的软件与 AI：降低成本、开拓新的收入来源，并把行之有效的模式规模化。" },
-      { num: "S", word: "Success", body: "以结果衡量的共同成功：更多客户、更多收入、更多利润。你成长，我们才成长。" },
-    ],
-    triadsLabel: "三个字母，三个承诺。",
-    triads: [
-      { theme: "如何合作", words: ["Align", "Trust", "Share"] },
-      { theme: "如何构建", words: ["Automate", "Transform", "Scale"] },
-      { theme: "你的收获", words: ["Advantage", "Traction", "Sustainable profit"] },
-    ],
-  },
-  partner: {
-    kicker: "我们如何合作",
-    title: "Align. Trust. Share.",
-    sub: "三步走的合作模式，让双方一起赚到单打独斗赚不到的收益。",
-    steps: [
-      { letter: "A", word: "Align", body: "先理解你的业务目标与收入目标，在写第一行代码之前，就范围、分工和成功标准达成一致。" },
-      { letter: "T", word: "Trust", body: "透明的进度、坦诚的沟通，以及言出必行的资深工程师，每个迭代都在积累信任。" },
-      { letter: "S", word: "Share", body: "共担风险，共享回报。产品越赚钱，我们一起成长；长期激励让我们始终专注于你的成果。" },
-    ],
-    motto: "目标一致，信任为本，利润共享。",
-  },
-  skills: {
-    kicker: "01 · 技能",
-    title: "我们擅长的，做到极致。",
-    sub: "四项核心能力，一支资深团队，一切为了你的业务增长。",
-    items: [
-      {
-        num: "01", title: "全栈开发",
-        body: "端到端的产品工程：简洁的 API、用心的前端，以及稳定可靠的基础设施。从空白仓库到团队可自主运维的系统，我们写的代码一年后依然清晰易懂。",
-        tags: ["Web 应用", "API", "云", "DevOps"],
-        alt: "昏暗工作区里笔记本上打开的代码编辑器",
-      },
-      {
-        num: "02", title: "AI 自动化",
-        body: "让 AI 接手那些悄悄消耗你时间的工作：客服、数据录入、报表、分发。我们构建经过评估、可观测、可安全用于生产的 RAG 流水线、智能体与集成。",
-        tags: ["LLM 智能体", "RAG", "工作流", "集成"],
-        alt: "交织线条之上的立体 AI 字样",
-      },
-      {
-        num: "03", title: "CMS 内容管理",
-        body: "让市场团队真正乐于使用的内容系统。无头或传统架构，快速且利于 SEO，让非技术人员也能放心发布，无需等待开发人员。",
-        tags: ["无头架构", "WordPress", "Sanity", "SEO"],
-        alt: "夜晚书桌上显示网站与代码的显示器",
-      },
-      {
-        num: "04", title: "CRM 客户管理",
-        body: "贴合你真实销售与服务流程的客户系统，而非反过来。清晰的管线、实用的自动化，以及让销售、运营与数据保持同步的集成。",
-        tags: ["销售管线", "自动化", "集成", "仪表盘"],
-        alt: "显示商业分析仪表盘的笔记本电脑",
-      },
-    ],
-  },
-  experience: {
-    kicker: "过往业绩",
-    title: "可以依靠的经验。",
-    sub: "正在进行的真实工作，以真诚的投入与全力以赴交付。",
-    handleAll: "从最初的想法到上线，再到之后的多年运维，整套技术都由我们承担，你无需在多家供应商之间奔波。",
-    items: [
-      { name: "Outlier", note: "AI 培训与模型评估（进行中）" },
-      { name: "Mercor", note: "AI 人才与数据项目（进行中）" },
-      { name: "Aligner", note: "AI 对齐与数据质量（进行中）" },
-      { name: "3 个全栈应用", note: "正在积极开发的 Web 平台" },
-    ],
-  },
-  results: {
-    kicker: "实证",
-    title: "从一个想法，到真实的收益。",
-    sub: "把协作用在一个想法上，究竟能产生什么。",
-    intro: [
-      "我们以行动印证承诺。下方图表展示了每位合作伙伴的平均收益变化，起点只是一个想法、我们的工程能力，以及把它做成的共同决心。",
-      "前两个月是准备期：调研、构建、打基础，按设计没有收益。从第三个月起，真实收入开始出现，超过每位伙伴 4,000 美元。到第十个月，增长至 13,000 美元以上。",
-      "合作伙伴无需任何技术背景。这些成果来自想法本身、真诚的协作精神，以及我们围绕它构建的技术。",
-    ],
-    prep: "准备期",
-    ramp: "收益创造",
-    axisX: "月",
-    axisY: "每位伙伴收益（美元）",
-    note: "图中数字为每位合作伙伴的数值。",
-    stats: [
-      { value: "2 个月", label: "准备期" },
-      { value: "$4K+", label: "第 3 个月" },
-      { value: "$13K+", label: "第 10 个月" },
-    ],
-  },
-  why: {
-    kicker: "02 · 为何选择",
-    title: "为何与 ATS Group 合作？",
-    sub: "不是交代完就被遗忘的供应商，而是像你一样思考业务的技术伙伴。",
-    blocks: [
-      {
-        q: "ATS Group 有何不同？",
-        a: "我们从你的业务出发，而非从一堆工具出发。再以资深工程与真实的 AI 经验，构建能与你共同扩展的成果。",
-        points: ["业务优先的思考", "长期合作关系", "AI 与自动化专长", "现代技术栈", "透明的沟通", "可扩展与未来成长"],
-      },
-      {
-        q: "企业为何能信任我们？",
-        a: "信任来自交付的方式：可预期、质量看得见、上线后依然在的支持。",
-        points: ["对质量的承诺", "可靠的交付流程", "聚焦可衡量的成果", "技术上的卓越", "长期支持"],
-      },
-      {
-        q: "我们在寻找怎样的合作？",
-        a: "我们与以年为单位思考的人合作得最好。如果你看重真实关系胜过一次交易，我们应该聊聊。",
-        points: ["商业协作", "战略合作", "技术合作", "与初创公司协作", "企业级项目", "长期客户关系"],
-      },
-      {
-        q: "我们如何展开合作？",
-        a: "先倾听，就「成功的样子」达成一致，并全程让你了解进展。责任是双向的。",
-        points: ["先理解业务目标", "透明的沟通", "共享愿景与责任", "持续改进", "共同成长与成功"],
-      },
-      {
-        q: "什么价值观指引我们？",
-        a: "无论是否有人在看，同样的原则指引着每一个决定。",
-        points: ["信任", "正直", "创新", "担当", "长期思维", "持续学习"],
-      },
-    ],
-  },
-  approach: {
-    kicker: "03 · 我们的方式",
-    title: "重匠心，轻喧嚣。",
-    sub_a: "我们相信", sub_em: "稳健而有意识的持续改进", sub_b: "，并将其贯彻于软件的打造过程。小步快走，频繁交付。凡是自己不愿运维的，绝不交付。",
-    steps: [
-      { no: "I", title: "先倾听", body: "我们从你的约束与客户出发，而非我们偏爱的框架。合适的工具，是你的团队能长久驾驭的那一个。" },
-      { no: "II", title: "公开地构建", body: "短周期、可见的进展、尽早可用的软件。决策即时共享，绝不是黑箱。" },
-      { no: "III", title: "让它更好", body: "我们交付有文档、经测试的系统，以及运维它们的知识。我们的目标，是让自己变得可有可无。" },
-    ],
-  },
-  stack: {
-    kicker: "04 · 技术栈",
-    title: "我们所选的工具。",
-    sub: "务实、经过验证、按项目选型，绝不盲目跟风。",
-    columns: [
-      { title: "前端", items: ["React", "Next.js", "TypeScript", "Vue", "Tailwind"] },
-      { title: "后端", items: ["Node.js", "Go", "Python", "PostgreSQL", "GraphQL"] },
-      { title: "AI / 自动化", items: ["Claude & OpenAI", "LangChain", "n8n / Zapier", "向量数据库", "RAG"] },
-      { title: "云与运维", items: ["AWS", "GCP", "Docker", "Kubernetes", "Terraform"] },
-    ],
-  },
-  collab: {
-    kicker: "05 · 合作伙伴",
-    title: "共同打造，长久同行。",
-    lead: "我们由衷期待发挥所长，帮助你把愿景变为现实。",
-    paras: [
-      "我们引以为傲的每一个成果，都源自同一处起点：彼此信任、目标一致的人。项目总会有艰难的时刻，真正支撑它走下去的，是持续的沟通、专业的态度，以及对彼此成功的真诚投入。",
-      "对我们而言，合作不止于并肩工作。它意味着优势互补、坦诚交流，并打开任何一方独自无法触及的大门。美好的成果，源自持续的努力与支持身边人的真诚意愿。",
-      "我们最看重的合作，并非追求短期的得失。它建立在可靠、相互尊重与共同的长期目标之上，随时间不断成长。当伙伴与我们的团队朝同一愿景前行，成果往往比项目本身更为长久。",
-      "目前，我们正寻求与重视真诚、成长导向合作的专业人士、创始人与商业伙伴建立联系，尤其是在美国与加拿大。无论你着眼于业务拓展、新技术，还是创造新机会，我们都期待与你一同探索可以共建的未来。",
-    ],
-    noTech: "而且，与我们合作并不需要懂技术。工程与 AI 的专长由我们带来；我们所期待的，是开放、信任，以及真正的合作精神。这，才是让合作得以成立的根本。",
-    revenue: "你也无需技术背景，便能与我们一同获得收益。通过推荐与收益分成的合作，你的人脉、市场认知与关系都能转化为实际收入，而所有技术交付都由我们在幕后默默完成。",
-    meetingNote: "换句话说，即使没有相关领域的专业知识，通过合作也能带来实在的成果与真实的收益。具体如何运作，我们会在一次简短的会议中为你详细说明。",
-    closing: "携手同行，让想法变为机会，也让机会化为长久的价值。",
-    cta: "开始一次对话",
-    slides: [
-      { alt: "两位开发者在笔记本前一起审阅代码", caption: "共同的目标，坦诚的沟通" },
-      { alt: "围坐在同一张桌前协作的团队", caption: "随时间成长的合作" },
-      { alt: "会议中击掌庆祝的合作伙伴", caption: "信任为先，水到渠成" },
-      { alt: "在白板前一起规划的团队", caption: "打造长久的价值" },
-    ],
-  },
-  philosophy: {
-    kicker: "我们的理念",
-    quote: "伟大的成就，极少由一人独自完成。最强的成果，来自彼此信任的合作，让想法、专长与投入朝着共同的愿景一起努力。",
-    paras: [
-      "有意义的成功需要耐心。真正重要的工作，很少能在一次冲刺中完成；它由那些为彼此持续付出的人，一点一滴稳健地建成。",
-      "强大的合作，是在艰难处而非顺境中受到考验。当出现问题或计划生变，真正的伙伴会留在场内，与你一起解决。",
-      "信任是其他一切赖以承载的基石。一旦建立，决策更快、反馈更坦诚、成果也明显更好。",
-      "创新极少来自孤立的一个头脑。当知识与经验被开放地分享，人们敢于尝试、质疑与打磨，创新便会生长。",
-      "长期思维会复利累积。为未来数年、而非下一个季度所做的选择，往往在日后创造更大的机会。",
-      "最好的成果来自朝同一方向划桨。当目标共享、方向清晰，优秀的团队总能找到抵达的路。",
-    ],
-  },
-  founders: {
-    kicker: "06 · 创始人",
-    title: "ATS 背后的人。",
-    sub: "两位创始人，同一标准：做诚实的工作，建立真实的关系，让每个项目都比当初更好。",
-    people: [
-      {
-        initials: "HT",
-        name: "Daniel (Hiro Tanaka)",
-        role: "联合创始人 & CTO",
-        bio: "Daniel 负责 ATS Group 的工程与应用 AI。他的职业生涯始终处于扎实软件与务实 AI 的交汇处：设计系统、培养工程师、坚守诚实的交付。他相信好的技术是安静的：它能用、耐久，并且不碍事。",
-        experience: [
-          "10 年以上生产级软件的构建与扩展",
-          "金融科技、SaaS 与电商的全栈 / AI 开发",
-          "主导架构、代码质量与 AI 自动化",
-        ],
-      },
-      {
-        initials: "AI",
-        name: "Akira Iwata",
-        role: "联合创始人 & CEO",
-        bio: "Akira 连接工程与业务，专注于合作伙伴与客户关系，确保每个项目都能落地为真实成果。Akira 的信念很简单：技术只有在帮助人与企业前进时才有意义。",
-        experience: [
-          "拥有商业战略与运营背景",
-          "建立长期的客户与伙伴关系",
-          "推动跨市场的增长、交付与合作",
-        ],
-      },
-    ],
-  },
+
   faqHead: {
-    kicker: "07 · 常见问题",
-    title: "我们直接作答。",
-    sub: "这些是合作伙伴与客户在开始前常问的问题。如果没有你的那一条，欢迎直接问我们。",
+    kicker: "提问",
+    title: "这些问题，您本就该问。",
+    sub: "包括那些带着怀疑的问题。如果这里没有提到，欢迎直接来问。",
   },
+
   contact: {
-    kicker: "08 · 联系我们",
-    title: "一起打造长久的价值。",
-    sub: "告诉我们你正在做的事，或预约一次 30 分钟的通话。无需幻灯片，只需一次坦诚的交流。",
-    formTitle: "给我们留言",
-    formSub: "每一条咨询，我们都会在一个工作日内回复。",
-    name: "姓名 *", namePh: "你的姓名",
-    email: "邮箱 *", emailPh: "you@company.com",
-    company: "公司", companyPh: "公司（选填）",
-    help: "我们能帮你什么？", helpPh: "选择一个主题…",
-    services: ["全栈开发", "AI 自动化", "CMS 内容管理", "CRM 客户管理", "合作伙伴 / 协作", "其他"],
-    message: "留言 *", messagePh: "用几句话介绍你的项目、时间安排或目标…",
-    submit: "发送留言", submitting: "发送中…",
-    successTitle: "谢谢，已收到你的留言。",
-    successBody: "我们会尽快与你联系。如有急事，欢迎在右侧预约通话。",
-    sendAnother: "再发一条",
-    errorGeneric: "出了点问题。",
-    fineprint: "提交即表示你同意我们就此咨询与你联系。我们绝不会分享你的信息。",
-    points: [
-      { label: "所在地", value: "日本 · 东京" },
-      { label: "回复", value: "一个工作日内" },
-      { label: "语言", value: "English / 日本語 / 中文" },
+    kicker: "申请",
+    title: "有兴趣？聊一聊吧。",
+    sub: "请简单介绍一下您自己和您的人脉。每一条消息都由两位创始人之一亲自阅读，无论结果如何都会回复您。",
+    formTitle: "申请成为合作伙伴",
+    formSub: "只有四项，不需要写得很正式。",
+    name: "您的姓名",
+    namePh: "张伟",
+    email: "电子邮箱",
+    emailPh: "wei@example.com",
+    loc: "所在城市",
+    locPh: "德州奥斯汀",
+    network: "您的人脉主要是",
+    networkPh: "请选择最接近的一项",
+    networks: [
+      "初创与科技公司",
+      "中小型企业",
+      "大型企业 / 集团",
+      "代理商与咨询公司",
+      "混合 / 其他",
     ],
-    bookingTitle: "想直接聊聊？预约通话",
-    bookingSub: "直接从我们的日历中预约 30 分钟的时段。",
-    fallback: "日历无法显示？ ",
+    message: "请介绍一下您的人脉",
+    messagePh: "您能接触到的企业类型、过往的销售经验，以及您希望从这次合作中得到什么。",
+    submit: "提交申请",
+    submitting: "发送中…",
+    successTitle: "谢谢，我们已经收到。",
+    successBody: "申请已收到，确认邮件正在发往您的邮箱。创始人之一会在一个工作日内回复您。",
+    sendAnother: "再发送一条消息",
+    errorGeneric: "暂时无法发送，请稍后重试，或直接预约通话。",
+    fineprint: "您的信息仅用于回复您本人。不会建立名单、不会提供给第三方、不会有自动跟进邮件。",
+    points: [
+      { label: "回复时间", value: "一个工作日内" },
+      { label: "谁来阅读", value: "创始人本人，而非助理" },
+      { label: "申请费用", value: "现在和以后都免费" },
+    ],
+    bookingTitle: "也可以直接预约通话",
+    bookingSub: "30 分钟，无需准备，带着您的问题来即可。",
+    fallback: "组件未加载？",
     fallbackLink: "在新标签页打开 Calendly →",
   },
+
   footer: {
-    blurb: "软件工程、AI 自动化与合作，源自东京。",
-    location: "日本 · 东京",
-    schedule: "预约会议 →",
-    rights: "版权所有。",
-    tagline: "可靠的工程，来自东京。",
+    blurb:
+      "一家位于东京的软件与 AI 工作室，正在寻找一位美国合作伙伴。项目由我们提供，人脉由您带来，利润按书面条款分享。",
+    location: "日本东京 · 与世界各地的伙伴合作",
+    schedule: "预约 30 分钟通话 →",
+    rights: "All rights reserved.",
+    tagline: "Alliance · Technology · Success",
   },
 };
 

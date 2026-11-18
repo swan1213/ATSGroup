@@ -6,6 +6,8 @@ import { Logo } from "./Logo";
 import { useT } from "./LanguageProvider";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
+const SECTION_IDS = ["offer", "who", "how", "terms", "about", "faq"];
+
 export function Header() {
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
@@ -28,19 +30,18 @@ export function Header() {
   }, [open]);
 
   const links = [
-    { href: "#skills", label: t.nav.skills },
-    { href: "#why", label: t.nav.why },
-    { href: "#collaboration", label: t.nav.collaboration },
-    { href: "#company", label: t.nav.company },
+    { href: "#offer", label: t.nav.offer },
+    { href: "#how", label: t.nav.how },
+    { href: "#terms", label: t.nav.terms },
+    { href: "#about", label: t.nav.about },
     { href: "#faq", label: t.nav.faq },
   ];
 
   // Highlight the nav link of the section currently in view
   useEffect(() => {
-    const ids = ["skills", "why", "collaboration", "company", "faq"];
-    const sections = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => !!el);
+    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => !!el
+    );
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -73,8 +74,8 @@ export function Header() {
             </a>
           ))}
           <LanguageSwitcher />
-          <a className="nav-cta" href="#contact">
-            {t.nav.contact}
+          <a className="nav-cta" href="#apply">
+            {t.nav.apply}
           </a>
         </nav>
 
@@ -91,18 +92,14 @@ export function Header() {
         </button>
       </div>
 
-      <div
-        id="mobile-menu"
-        className={`mobile-menu${open ? " open" : ""}`}
-        hidden={!open}
-      >
+      <div id="mobile-menu" className={`mobile-menu${open ? " open" : ""}`} hidden={!open}>
         {links.map((item) => (
           <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
             {item.label}
           </a>
         ))}
-        <a href="#contact" onClick={() => setOpen(false)}>
-          {t.nav.contact}
+        <a href="#apply" onClick={() => setOpen(false)}>
+          {t.nav.apply}
         </a>
         <div className="mobile-lang">
           <LanguageSwitcher compact />
